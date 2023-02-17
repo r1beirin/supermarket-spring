@@ -8,7 +8,6 @@ import org.json.simple.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ResponseStatus;
-
 import java.time.LocalDate;
 
 public class ProductServices {
@@ -38,7 +37,11 @@ public class ProductServices {
      * @Year: 2023
      */
     public static void setProductField(Product product, JSONObject productUpdated) throws IllegalArgumentException{
-        if(productUpdated.get("nameProduct") == null || productUpdated.get("valueProduct") == null || productUpdated.get("descriptionProduct") == null || productUpdated.get("expirationProductAt") == null){
+        if(productUpdated.get("nameProduct") == null ||
+                productUpdated.get("valueProduct") == null ||
+                Double.parseDouble(String.valueOf(productUpdated.get("valueProduct"))) < 0 ||
+                productUpdated.get("descriptionProduct") == null ||
+                productUpdated.get("expirationProductAt") == null){
             throw new IllegalArgumentException();
         }
 
