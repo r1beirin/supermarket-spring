@@ -1,10 +1,3 @@
-/*
- *
- * @Author: github.com/r1beirin
- * @Year: 2023
- *
- */
-
 package com.springstudie.supermarket.controller.services;
 
 import com.fasterxml.jackson.core.JacksonException;
