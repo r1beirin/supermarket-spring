@@ -4,7 +4,7 @@ import com.springstudie.supermarket.services.ProductServices;
 import com.springstudie.supermarket.repository.ProductRepository;
 import com.springstudie.supermarket.model.usecases.Product;
 import org.json.simple.JSONObject;
-import org.springframework.http.HttpStatus;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -104,9 +104,14 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public String deleteProduct(@PathVariable long id){
-        productRepository.deleteById(id);
-        return "Ok";
+    public ResponseEntity<Product> deleteProduct(@PathVariable long id){
+        try{
+            productRepository.deleteById(id);
+            return ProductServices.onSuccessRequest();
+        }
+        catch (EmptyResultDataAccessException e){
+            return ProductServices.onNotFoundException();
+        }
     }
 
     @DeleteMapping("/")
