@@ -74,4 +74,9 @@ public static void setProductField(Product product, JSONObject productUpdated) t
     public static ResponseEntity<Product> onSuccessRequest(){
         return ResponseEntity.ok().build();
     }
+
+    @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "Resource not exist")
+    public static ResponseEntity<Product> onNotFoundException(){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
 }
