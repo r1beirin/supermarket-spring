@@ -45,17 +45,8 @@ public class ProductController {
 
     @GetMapping("/{id}")
     @ResponseBody
-    public ResponseEntity<Product> getProduct(@PathVariable long id){
-        try{
-            return ResponseEntity
-                    .ok()
-                    .body(productRepository.findById(id));
-        }
-        catch (Exception e) {
-            return ResponseEntity
-                    .notFound()
-                    .build();
-        }
+    public Product getProduct(@PathVariable long id){
+        return productRepository.findById(id);
     }
 
     @GetMapping("/")
