@@ -1,7 +1,7 @@
 package com.springstudie.supermarket.controller;
 
 import com.springstudie.supermarket.model.infra.db.repository.ProductRepository;
-import com.springstudie.supermarket.model.infra.services.ProductServices;
+import com.springstudie.supermarket.controller.services.ProductServices;
 import com.springstudie.supermarket.model.usecases.Product;
 import org.json.simple.JSONObject;
 import org.springframework.http.HttpStatus;

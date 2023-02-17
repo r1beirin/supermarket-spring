@@ -1,4 +1,11 @@
-package com.springstudie.supermarket.model.infra.services;
+/*
+ *
+ * @Author: github.com/r1beirin
+ * @Year: 2023
+ *
+ */
+
+package com.springstudie.supermarket.controller.services;
 
 import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -15,12 +22,12 @@ public class ProductServices {
      * @Year: 2023
      *
      */
-    public static boolean isJSONValid(String jsonInString) {
+    public static boolean isJSONValid(String jsonToString) {
         ObjectMapper mapper = new ObjectMapper()
                 .enable(DeserializationFeature.FAIL_ON_TRAILING_TOKENS);
 
         try{
-            mapper.readTree(jsonInString);
+            mapper.readTree(jsonToString);
         }catch (JacksonException e){
             return false;
         }
