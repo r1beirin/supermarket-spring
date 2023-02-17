@@ -1,4 +1,11 @@
-package com.springstudie.supermarket.controller.services;
+/*
+ *
+ * @Author: github.com/r1beirin
+ * @Year: 2023
+ *
+ */
+
+package com.springstudie.supermarket.services;
 
 import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
