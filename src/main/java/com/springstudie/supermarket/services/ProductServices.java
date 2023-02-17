@@ -62,7 +62,7 @@ public static void setProductField(Product product, JSONObject productUpdated) t
      *
      */
     @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY, reason = "Some fields are invalid")
-    public static ResponseEntity<Product> onIllegalFieldException(IllegalArgumentException e){
+    public static ResponseEntity<Product> onIllegalFieldException(){
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(null);
     }
     @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Some parameters are invalid")
