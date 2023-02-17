@@ -83,26 +83,23 @@ public class ProductController {
             if(ProductServices.isJSONValid(productUpdated.toString())) {
                 Product oldProduct = productRepository.findById(id);
 
-                if(oldProduct == null) return ResponseEntity
-                                                .notFound()
-                                                .build();
+                if(oldProduct == null) return ProductServices.onNotFoundException();
                 else {
-                    ProductServices.setProductField(oldProduct, productUpdated);
+                    try {
+                        ProductServices.setProductField(oldProduct, productUpdated);
 
-                    Product newProduct = productRepository.saveAndFlush(oldProduct);
-                    return ResponseEntity
-                            .ok()
-                            .body(newProduct);
+                        productRepository.saveAndFlush(oldProduct);
+                        return ProductServices.onSuccessRequest();
+                    }
+                    catch (IllegalArgumentException e){
+                        return ProductServices.onIllegalArgumentException();
+                    }
                 }
             }
-            else return ResponseEntity
-                            .badRequest()
-                            .build();
+            else return ProductServices.onIllegalArgumentException();
         }
         catch (Exception e){
-            return ResponseEntity
-                    .status(HttpStatus.UNPROCESSABLE_ENTITY)
-                    .body(null);
+            return ProductServices.onIllegalFieldException();
         }
     }
 
