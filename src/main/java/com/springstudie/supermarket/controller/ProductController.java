@@ -128,9 +128,4 @@ public class ProductController {
             return ProductServices.onNotFoundException();
         }
     }
-
-    @DeleteMapping("/")
-    public void deleteAllProducts(){
-        productRepository.deleteAll();
-    }
 }
