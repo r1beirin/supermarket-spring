@@ -1,10 +1,9 @@
 package com.springstudie.supermarket.controller;
 
-import com.springstudie.supermarket.services.ProductServices;
-import com.springstudie.supermarket.repository.ProductRepository;
 import com.springstudie.supermarket.model.usecases.Product;
+import com.springstudie.supermarket.repository.ProductRepository;
+import com.springstudie.supermarket.services.ProductServices;
 import org.json.simple.JSONObject;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -81,7 +80,7 @@ public class ProductController {
      */
     @PutMapping(value = "/{id}")
     @ResponseBody
-    public ResponseEntity<Product> putProduct(@PathVariable long id, @RequestBody JSONObject productUpdated) {
+    public ResponseEntity<Product> updateProduct(@PathVariable long id, @RequestBody JSONObject productUpdated) {
         try {
             if(ProductServices.isJSONValid(productUpdated.toString())) {
                 Product oldProduct = productRepository.findById(id);
@@ -124,7 +123,7 @@ public class ProductController {
             productRepository.deleteById(id);
             return ProductServices.onSuccessRequest();
         }
-        catch (EmptyResultDataAccessException e){
+        catch (RuntimeException e){
             return ProductServices.onNotFoundException();
         }
     }
