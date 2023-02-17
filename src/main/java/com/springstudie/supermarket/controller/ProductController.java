@@ -1,7 +1,7 @@
 package com.springstudie.supermarket.controller;
 
-import com.springstudie.supermarket.repository.ProductRepository;
 import com.springstudie.supermarket.services.ProductServices;
+import com.springstudie.supermarket.repository.ProductRepository;
 import com.springstudie.supermarket.model.usecases.Product;
 import org.json.simple.JSONObject;
 import org.springframework.http.HttpStatus;
@@ -23,26 +23,24 @@ public class ProductController {
     @ResponseBody
     public ResponseEntity<Product> postProduct(@RequestBody JSONObject productToBeConverted){
         try{
-            // Se o request ta valido continua
             if(ProductServices.isJSONValid(productToBeConverted.toString())){
                 Product product = new Product();
-                ProductServices.setProductField(product, productToBeConverted);
-                productRepository.save(product);
+                try {
+                    ProductServices.setProductField(product, productToBeConverted);
+                    productRepository.save(product);
 
-                return ResponseEntity.ok().build();
+                    return ProductServices.onSuccessRequest();
+                }
+                catch (IllegalArgumentException e){
+                    return ProductServices.onIllegalArgumentException();
+                }
             }
-            //  Request não ta valido
-            else return ResponseEntity
-                    .notFound()
-                    .build();
+
+            else return ProductServices.onIllegalArgumentException();
         }
-        // algum campo vazio
-        catch (Exception e){
-            return ResponseEntity
-                    .status(HttpStatus.UNPROCESSABLE_ENTITY)
-                    .body(null);
+        catch (IllegalArgumentException e){
+            return ProductServices.onIllegalFieldException(e);
         }
-        //return productRepository.save(product);
     }
 
     @GetMapping("/{id}")
