@@ -39,7 +39,7 @@ public class ProductController {
             else return ProductServices.onIllegalArgumentException();
         }
         catch (IllegalArgumentException e){
-            return ProductServices.onIllegalFieldException(e);
+            return ProductServices.onIllegalFieldException();
         }
     }
 
