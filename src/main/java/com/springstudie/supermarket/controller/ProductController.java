@@ -19,6 +19,18 @@ public class ProductController {
         this.productRepository = productRepository;
     }
 
+
+    /*
+     * Method to post a product in API
+     *
+     * @Author: github.com/r1beirin
+     * @Year: 2023
+     *
+     * Status code:
+     *  200 - Successful: it's ok in your request
+     *  400 - Bad request: irregular parameter in any field
+     *  422 - Unprocessable Entity: error in any fields.
+     */
     @PostMapping( "/")
     @ResponseBody
     public ResponseEntity<Product> postProduct(@RequestBody JSONObject productToBeConverted){
@@ -94,6 +106,18 @@ public class ProductController {
         }
     }
 
+
+
+    /*
+     * Method to delete a product in API
+     *
+     * @Author: github.com/r1beirin
+     * @Year: 2023
+     *
+     * Status code:
+     *  200 - Successful: it's ok in your request
+     *  404 - Not found: resource not exist
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Product> deleteProduct(@PathVariable long id){
         try{
