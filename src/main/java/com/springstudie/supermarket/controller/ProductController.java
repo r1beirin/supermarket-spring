@@ -17,7 +17,7 @@ public class ProductController {
 
     @RequestMapping(value = "/products/register", method = RequestMethod.GET)
     public String registerProduct(Model model){
-        model.addAttribute("registerProduct");
+        model.addAttribute("productsRegister");
 
         return "productsRegister";
     }
