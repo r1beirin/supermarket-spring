@@ -1,0 +1,64 @@
+<!-- This HTML form is based from github.com/Larissakich -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Supermarket-spring</title>
+  <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body class="teste">
+
+<nav id="menu-horizontal">
+  <ul>
+    <li><a href="/static">Home</a></li>
+    <li><a href="/products">Products</a></li>
+    <li><a href="/register/product">Register a product</a></li>
+    <li><a href="/login">Login</a></li>
+  </ul>
+</nav>
+
+<div class="container">
+  <div class="form">
+    <form action="/api/products/" method="POST">
+      <div class="form-header">
+        <div class="title">
+          <h1>Register your product</h1>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <div class="input-box">
+          <label for="id" hidden="hidden">ID of product</label>
+          <input id="id" type="number" readonly="readonly" hidden="hidden">
+        </div>
+
+        <div class="input-box">
+          <label for="nameProduct">Name of product</label>
+          <input id="nameProduct" type="text" placeholder="Name of your product" required>
+        </div>
+
+        <div class="input-box">
+          <label for="valueProduct">Price of product</label>
+          <input id="valueProduct" type="number" placeholder="Value of your product" required step="any">
+        </div>
+
+        <div class="input-box">
+          <label for="descriptionProduct">Description of product</label>
+          <input id="descriptionProduct" type="text" placeholder="Description of your product" required>
+        </div>
+
+        <div class="input-box">
+          <label for="expirationProductAt">Expiration date of product</label>
+          <input id="expirationProductAt" type="date" placeholder="Expiration date of your product" required>
+        </div>
+      </div>
+
+      <div class="register-button">
+        <button><a href="#">Register</a></button>
+      </div>
+
+    </form>
+  </div>
+</div>
+</body>
+</html>
