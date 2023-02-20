@@ -19,6 +19,6 @@ public class ProductController {
     public String registerProduct(Model model){
         model.addAttribute("registerProduct");
 
-        return "registerProduct";
+        return "productsRegister";
     }
 }
