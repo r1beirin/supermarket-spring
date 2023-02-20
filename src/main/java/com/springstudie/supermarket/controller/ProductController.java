@@ -59,7 +59,7 @@ public class ProductController {
     public ResponseEntity<Product> getProduct(@PathVariable long id){
         Product product = productRepository.findById(id);
 
-        if(product == null) return ProductServices.onNotFoundMessage();
+        if(ProductServices.isProductExists(product)) return ProductServices.onNotFoundMessage();
         else return ProductServices.onSuccessMessage(product);
     }
 
@@ -88,7 +88,7 @@ public class ProductController {
             if(ProductServices.isValidField(productUpdated)) {
                 Product oldProduct = productRepository.findById(id);
 
-                if(oldProduct == null) return ProductServices.onNotFoundMessage();
+                if(ProductServices.isProductExists(oldProduct)) return ProductServices.onNotFoundMessage();
 
                 ProductServices.setProductField(oldProduct, productUpdated);
                 productRepository.saveAndFlush(oldProduct);
@@ -115,7 +115,7 @@ public class ProductController {
     public ResponseEntity<Product> deleteProduct(@PathVariable long id){
         Product product = productRepository.findById(id);
 
-        if(product == null) return ProductServices.onNotFoundMessage();
+        if(ProductServices.isProductExists(product)) return ProductServices.onNotFoundMessage();
         else{
             productRepository.deleteById(id);
             return ProductServices.onSuccessMessage();
