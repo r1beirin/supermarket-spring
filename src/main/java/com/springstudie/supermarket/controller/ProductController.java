@@ -32,31 +32,35 @@ public class ProductController {
     @PostMapping( "/")
     @ResponseBody
     public ResponseEntity<Product> postProduct(@RequestBody JSONObject productToBeConverted){
-        try{
-            if(ProductServices.isJSONValid(productToBeConverted.toString())){
+        if(ProductServices.isValidJson(productToBeConverted.toString())) {
+            if(ProductServices.isValidField(productToBeConverted)) {
                 Product product = new Product();
-                try {
-                    ProductServices.setProductField(product, productToBeConverted);
-                    productRepository.save(product);
+                ProductServices.setProductField(product, productToBeConverted);
+                productRepository.save(product);
 
-                    return ProductServices.onSuccessRequest();
-                }
-                catch (IllegalArgumentException e){
-                    return ProductServices.onIllegalArgumentException();
-                }
-            }
-
-            else return ProductServices.onIllegalArgumentException();
+                return ProductServices.onSuccessMessage();
+            } else return ProductServices.onIllegalArgumentMessage();
         }
-        catch (IllegalArgumentException e){
-            return ProductServices.onIllegalFieldException();
-        }
+        else return ProductServices.onIllegalArgumentMessage();
     }
 
+    /*
+     * Method to get a product in API
+     *
+     * @Author: github.com/r1beirin
+     * @Year: 2023
+     *
+     * Status code:
+     *  200 - Successful: it's ok in your request
+     *  404 - Not found: resource not exist
+     */
     @GetMapping("/{id}")
     @ResponseBody
-    public Product getProduct(@PathVariable long id){
-        return productRepository.findById(id);
+    public ResponseEntity<Product> getProduct(@PathVariable long id){
+        Product product = productRepository.findById(id);
+
+        if(product == null) return ProductServices.onNotFoundMessage();
+        else return ProductServices.onSuccessMessage(product);
     }
 
     @GetMapping("/")
@@ -75,33 +79,24 @@ public class ProductController {
      *  200 - Successful: it's ok in your request
      *  400 - Bad request: irregular parameter in any field
      *  404 - Not found: resource not exist
-     *  422 - Unprocessable Entity: error in any fields.
      */
     @PutMapping(value = "/{id}")
     @ResponseBody
     public ResponseEntity<Product> updateProduct(@PathVariable long id, @RequestBody JSONObject productUpdated) {
-        try {
-            if(ProductServices.isJSONValid(productUpdated.toString())) {
+
+        if(ProductServices.isValidJson(productUpdated.toString())) {
+            if(ProductServices.isValidField(productUpdated)) {
                 Product oldProduct = productRepository.findById(id);
 
-                if(oldProduct == null) return ProductServices.onNotFoundException();
-                else {
-                    try {
-                        ProductServices.setProductField(oldProduct, productUpdated);
+                if(oldProduct == null) return ProductServices.onNotFoundMessage();
 
-                        productRepository.saveAndFlush(oldProduct);
-                        return ProductServices.onSuccessRequest();
-                    }
-                    catch (IllegalArgumentException e){
-                        return ProductServices.onIllegalArgumentException();
-                    }
-                }
-            }
-            else return ProductServices.onIllegalArgumentException();
+                ProductServices.setProductField(oldProduct, productUpdated);
+                productRepository.saveAndFlush(oldProduct);
+
+                return ProductServices.onSuccessMessage();
+            } else return ProductServices.onIllegalArgumentMessage();
         }
-        catch (Exception e){
-            return ProductServices.onIllegalFieldException();
-        }
+        else return ProductServices.onIllegalArgumentMessage();
     }
 
 
@@ -118,12 +113,12 @@ public class ProductController {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Product> deleteProduct(@PathVariable long id){
-        try{
+        Product product = productRepository.findById(id);
+
+        if(product == null) return ProductServices.onNotFoundMessage();
+        else{
             productRepository.deleteById(id);
-            return ProductServices.onSuccessRequest();
-        }
-        catch (RuntimeException e){
-            return ProductServices.onNotFoundException();
+            return ProductServices.onSuccessMessage();
         }
     }
 }
