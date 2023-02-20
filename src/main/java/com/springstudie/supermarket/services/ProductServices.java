@@ -12,6 +12,10 @@ import java.time.LocalDate;
 
 public class ProductServices {
 
+    public static boolean isProductExists(Product product){
+        return product == null;
+    }
+
     /*
      * This a method to json request validator.
      *
