@@ -20,20 +20,15 @@
 
 <div class="container">
   <h1>Register your product</h1>
-  <form action="/api/products/" method="post">
+  <form action="/api/products/" method="POST">
     <div class="mb-3">
-      <label for="id" hidden="hidden">ID</label>
-      <input id="id" type="number" class="form-control" readonly="readonly" hidden="hidden">
-    </div>
-
-    <div class="mb-3">
-      <label for="nameProduct" class="text-inside"> Name</label>
+      <label for="nameProduct" class="text-inside">Name</label>
       <input id="nameProduct" type="text" class="form-control" placeholder="Name of your product" required>
     </div>
 
     <div class="mb-3">
       <label for="valueProduct" class="text-inside">Price</label>
-      <input id="valueProduct" type="text" class="form-control" placeholder="Value of your product" required step="any">
+      <input id="valueProduct" type="number" class="form-control" placeholder="Value of your product" required step="any">
     </div>
 
     <div class="mb-3">

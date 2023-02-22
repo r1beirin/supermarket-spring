@@ -1,10 +1,13 @@
 package com.springstudie.supermarket.services;
 
 import com.fasterxml.jackson.core.JacksonException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import com.springstudie.supermarket.model.usecases.Product;
 import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -32,6 +35,14 @@ public class ProductServices {
             return false;
         }
         return true;
+    }
+
+    public static JSONObject obj2Json(Object obj) {
+        try {
+            return (JSONObject) JSONValue.parse(new ObjectMapper().writeValueAsString(obj));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /*

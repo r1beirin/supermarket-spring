@@ -29,9 +29,12 @@ public class ProductsAPIController {
      *  400 - Bad request: irregular parameter in any field
      *  422 - Unprocessable Entity: error in any fields.
      */
-    @PostMapping( "/")
-    @ResponseBody
+    @PostMapping( value = "/", consumes = "application/json")
     public ResponseEntity<Product> postProduct(@RequestBody JSONObject productToBeConverted){
+        return getProductResponseEntity(productToBeConverted);
+    }
+
+    private ResponseEntity<Product> getProductResponseEntity(@RequestBody JSONObject productToBeConverted) {
         if(ProductServices.isValidJson(productToBeConverted.toString())) {
             if(ProductServices.isValidField(productToBeConverted)) {
                 Product product = new Product();
@@ -42,6 +45,13 @@ public class ProductsAPIController {
             } else return ProductServices.onIllegalArgumentMessage();
         }
         else return ProductServices.onIllegalArgumentMessage();
+    }
+
+    @PostMapping(value = "/")
+    public ResponseEntity<Product> postProduct(Product productToBeConverted){
+        System.out.println(productToBeConverted);
+        JSONObject json = ProductServices.obj2Json(productToBeConverted);
+        return getProductResponseEntity(json);
     }
 
     /*
@@ -55,7 +65,6 @@ public class ProductsAPIController {
      *  404 - Not found: resource not exist
      */
     @GetMapping("/{id}")
-    @ResponseBody
     public ResponseEntity<Product> getProduct(@PathVariable long id){
         Product product = productRepository.findById(id);
 
@@ -64,7 +73,6 @@ public class ProductsAPIController {
     }
 
     @GetMapping("/")
-    @ResponseBody
     public List<Product> getAllProducts(){
         return productRepository.findAll();
     }
@@ -81,8 +89,7 @@ public class ProductsAPIController {
      *  404 - Not found: resource not exist
      */
     @PutMapping(value = "/{id}")
-    @ResponseBody
-    public ResponseEntity<Product> updateProduct(@PathVariable long id, @RequestBody JSONObject productUpdated) {
+    public ResponseEntity<Product> updateProduct(@PathVariable long id, JSONObject productUpdated) {
 
         if(ProductServices.isValidJson(productUpdated.toString())) {
             if(ProductServices.isValidField(productUpdated)) {

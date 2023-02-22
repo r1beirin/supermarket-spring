@@ -25,16 +25,15 @@ public class ProductController {
     public ModelAndView allProducts(){
         ModelAndView mv = new ModelAndView("products");
         List<Product> productList = productAPI.getAllProducts();
-        System.out.println(productList);
         mv.addObject("productList", productList);
 
         return mv;
     }
 
     @RequestMapping(value = "/products/register", method = RequestMethod.GET)
-    public String registerProduct(Model model){
-        model.addAttribute("productsRegister");
+    public ModelAndView registerProduct(){
+        ModelAndView mv = new ModelAndView("productsRegister");
 
-        return "productsRegister";
+        return mv;
     }
 }
