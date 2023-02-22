@@ -22,11 +22,11 @@ public class ProductController {
         this.productAPI = productAPI1;
     }
     @GetMapping("/products")
-    public ModelAndView products(){
+    public ModelAndView allProducts(){
         ModelAndView mv = new ModelAndView("products");
         List<Product> productList = productAPI.getAllProducts();
         System.out.println(productList);
-        //mv.addObject(productList);
+        mv.addObject("productList", productList);
 
         return mv;
     }
