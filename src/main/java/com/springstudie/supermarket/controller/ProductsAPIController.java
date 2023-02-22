@@ -1,5 +1,13 @@
 package com.springstudie.supermarket.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.springstudie.supermarket.model.usecases.Product;
 import com.springstudie.supermarket.repository.ProductRepository;
 import com.springstudie.supermarket.services.ProductServices;
@@ -49,7 +57,6 @@ public class ProductsAPIController {
 
     @PostMapping(value = "/")
     public ResponseEntity<Product> postProduct(Product productToBeConverted){
-        System.out.println(productToBeConverted);
         JSONObject json = ProductServices.obj2Json(productToBeConverted);
         return getProductResponseEntity(json);
     }
