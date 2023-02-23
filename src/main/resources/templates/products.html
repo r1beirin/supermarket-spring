@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Supermarket-spring</title>
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<nav id="menu-horizontal">
+  <ul>
+    <li><a th:href="@{/}">Home</a></li>
+    <li><a th:href="@{/products}">Products</a></li>
+    <li><a th:href="@{/products/register}">Register a product</a></li>
+    <li><a href="/login">Login</a></li>
+  </ul>
+</nav>
+
+<div class="container-table">
+  <table class="table">
+    <thead class="thead-custom">
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Value</th>
+        <th scope="col">Description</th>
+        <th scope="col">Expiration date</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr th:each="product : ${productList}">
+        <th scope="row" th:text="${product.id}"></th>
+        <td th:text="${product.nameProduct}"></td>
+        <td th:text="${product.valueProduct}"></td>
+        <td th:text="${product.descriptionProduct}"></td>
+        <td th:text="${product.expirationProductAt}"></td>
+        <td>
+          <a th:href="@{/products/edit/{id}(id=${product.id})}"><i class="fas fa-edit"></i></a>
+          <a th:href="@{/products/delete/{id}(id=${product.id})}"><i onclick="alert('Product has been successfully deleted!')" class='fas fa-eraser'></i></a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous"></script><script src="/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

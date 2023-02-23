@@ -12,7 +12,13 @@ import java.time.LocalDate;
 
 public class ProductServices {
 
-    public static boolean isProductExists(Product product){
+    /*
+     * This a method to verify if a product object is null.
+     *
+     * @Author: github.com/r1beirin
+     * @Year: 2023
+     */
+    public static boolean isProductNotExists(Product product){
         return product == null;
     }
 
@@ -32,6 +38,19 @@ public class ProductServices {
             return false;
         }
         return true;
+    }
+
+    /*
+     * This a method to convert a product object to json object.
+     *
+     * @Author: github.com/r1beirin
+     * @Year: 2023
+     */
+    public static void product2json(Product product, JSONObject json){
+        json.put("nameProduct", product.getNameProduct());
+        json.put("valueProduct", product.getValueProduct());
+        json.put("descriptionProduct", product.getDescriptionProduct());
+        json.put("expirationProductAt", String.valueOf(product.getExpirationProductAt()));
     }
 
     /*

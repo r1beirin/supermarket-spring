@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Supermarket-spring</title>
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<nav id="menu-horizontal">
+  <ul>
+    <li><a th:href="@{/}">Home</a></li>
+    <li><a th:href="@{/products}">Products</a></li>
+    <li><a th:href="@{/products/register}">Register a product</a></li>
+    <li><a href="/login">Login</a></li>
+  </ul>
+</nav>
+
+<div class="container">
+  <h1>Register your product</h1>
+  <form id="updateProductForm" action="/api/products/" method="POST">
+    <div class="mb-3">
+      <label for="nameProduct" class="text-inside">Name</label>
+      <input id="nameProduct" name="nameProduct" type="text" class="form-control" placeholder="Name of your product" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="valueProduct" class="text-inside">Price</label>
+      <input id="valueProduct" name="valueProduct" type="number" class="form-control" placeholder="Value of your product" required step="any">
+    </div>
+
+    <div class="mb-3">
+      <label for="descriptionProduct" class="text-inside">Description</label>
+      <input id="descriptionProduct" name="descriptionProduct" type="text" class="form-control" placeholder="Description of your product" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="expirationProductAt" class="text-inside">Expiration</label>
+      <input id="expirationProductAt" name="expirationProductAt" type="date" class="form-control" placeholder="Expiration date of your product" required>
+    </div>
+
+    <div class="container-fluid">
+      <div class="button">
+        <button type="submit" class="btn btn-light">Register</button>
+      </div>
+      <div class="button">
+        <a class="btn btn-light" href="/products" role="button">Back</a>
+      </div>
+    </div>
+  </form>
+</div>
+
+<script>
+  document.querySelector('#updateProductForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const url = this.getAttribute('action');
+    const formData = new FormData(this);
+
+    fetch(url, {
+      method: 'POST',
+      body: formData
+    })
+            .then(response => {
+              if (response.ok) {
+                alert('Product registred with success!!');
+              } else {
+                alert('Error!');
+              }
+            })
+            .catch(error => {
+              alert('Error!');
+            });
+  });
+</script>
+
+<script src="/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

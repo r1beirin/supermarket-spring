@@ -1,0 +1,114 @@
+/* <!-- The part of form is based from github.com/Larissakich -->*/
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap');
+*{
+    margin: 0 auto;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+#menu-horizontal{
+    list-style: none;
+    padding: 0;
+    background-color: rgba(0, 0, 0, 0.81);
+}
+
+#menu-horizontal ul li{
+    display: inline;
+}
+
+#menu-horizontal ul li a{
+    color: white;
+    padding: 24px;
+    display: inline-block;
+    text-decoration: none;
+}
+
+#menu-horizontal ul li a:hover{
+    background-color: #6821e0;
+    transition: background .5s;
+}
+
+#menu-horizontal ul li:last-child a{
+    float: right;
+    background-color: #6821e0;
+}
+
+.container{
+    width: 60%;
+    height: 40%;
+    display: block;
+    padding: 1rem;
+    margin-top: 5%;
+    background: #6821e0;
+    border: none;
+    border-radius: 10px;
+}
+
+.container h1{
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    margin-bottom: 1.5%;
+}
+
+.container h1::after{
+    margin-top: 1%;
+    content: '';
+    display: block;
+    width: 100%;
+    height: 0.3rem;
+    background-color: #ffffff;
+}
+
+.mb-3{
+    margin: -0.7%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.text-inside{
+    font-weight: bold;
+    color: white;
+    margin-top: 0.5%;
+    margin-bottom: 0.5%;
+}
+
+.form-control{
+    margin-left: 0.6%;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 1px 1px 6px #0000001c;
+    font-size: 0.9rem;
+}
+
+.button{
+    display: inline;
+    width: auto;
+    margin: auto 0;
+    text-align: center;
+}
+
+.btn{
+    width: 10%;
+    color: #3f3f3f;
+}
+
+.btn-back{
+    background-color: white;
+}
+
+.container-fluid{
+    text-align: center;
+}
+
+.container-table{
+    margin: 1.5%;
+}
+
+.thead-custom{
+    background-color: #6821e0;
+    color: white;
+}
