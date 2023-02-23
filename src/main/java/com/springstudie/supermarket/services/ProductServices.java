@@ -4,19 +4,13 @@ import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springstudie.supermarket.model.usecases.Product;
-import com.springstudie.supermarket.repository.ProductRepository;
 import org.json.simple.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import java.time.LocalDate;
 
 public class ProductServices {
-    private static ProductRepository productRepository;
-    ProductServices(ProductRepository productRepository){
-        ProductServices.productRepository = productRepository;
-    }
 
     /*
      * This a method to verify if a product object is null.
@@ -121,18 +115,5 @@ public class ProductServices {
     @ResponseStatus(value = HttpStatus.OK, reason = "Successful")
     public static ResponseEntity<Product> onSuccessMessage(Product product){
         return ResponseEntity.ok(product);
-    }
-
-    public static ResponseEntity<Product> getPostProductResponseEntity(@RequestBody JSONObject productToBeConverted) {
-        if(ProductServices.isValidJson(productToBeConverted.toString())) {
-            if(ProductServices.isValidField(productToBeConverted)) {
-                Product product = new Product();
-                ProductServices.setProductField(product, productToBeConverted);
-                productRepository.save(product);
-
-                return ProductServices.onSuccessMessage();
-            } else return ProductServices.onIllegalArgumentMessage();
-        }
-        else return ProductServices.onIllegalArgumentMessage();
     }
 }

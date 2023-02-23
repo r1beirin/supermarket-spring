@@ -32,7 +32,7 @@ public class ProductsAPIController {
      */
     @PostMapping( value = "/", consumes = "application/json")
     public ResponseEntity<Product> postProduct(@RequestBody JSONObject product){
-        return ProductServices.getPostProductResponseEntity(product);
+        return getPostProductResponseEntity(product);
     }
 
     @PostMapping(value = "/")
@@ -40,7 +40,19 @@ public class ProductsAPIController {
         JSONObject productFromJson = new JSONObject();
         ProductServices.product2json(product, productFromJson);
 
-        return ProductServices.getPostProductResponseEntity(productFromJson);
+        return getPostProductResponseEntity(productFromJson);
+    }
+    public ResponseEntity<Product> getPostProductResponseEntity(@RequestBody JSONObject productFromJson) {
+        if(ProductServices.isValidJson(productFromJson.toString())) {
+            if(ProductServices.isValidField(productFromJson)) {
+                Product product = new Product();
+                ProductServices.setProductField(product, productFromJson);
+                productRepository.save(product);
+
+                return ProductServices.onSuccessMessage();
+            } else return ProductServices.onIllegalArgumentMessage();
+        }
+        else return ProductServices.onIllegalArgumentMessage();
     }
 
     /*
