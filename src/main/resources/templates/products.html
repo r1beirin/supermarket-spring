@@ -39,7 +39,7 @@
         <td th:text="${product.expirationProductAt}"></td>
         <td>
           <a th:href="@{/products/edit/{id}(id=${product.id})}"><i class="fas fa-edit"></i></a>
-          <a th:href="@{/products/delete/{id}(id=${product.id})}"><i class='fas fa-eraser'></i></a>
+          <a th:href="@{/products/delete/{id}(id=${product.id})}"><i onclick="alert('Product has been successfully deleted!')" class='fas fa-eraser'></i></a>
         </td>
       </tr>
     </tbody>

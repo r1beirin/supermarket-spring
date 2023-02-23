@@ -18,7 +18,7 @@ public class ProductController {
         this.productAPI = productAPI;
     }
     @GetMapping("/products")
-    public ModelAndView allProducts(){
+    public ModelAndView products(){
         ModelAndView mv = new ModelAndView("products");
         List<Product> productList = productAPI.getAllProducts();
         mv.addObject("productList", productList);
@@ -38,5 +38,11 @@ public class ProductController {
         Product product = productAPI.getProduct(id).getBody();
         mv.addObject("product", product);
         return mv;
+    }
+
+    @GetMapping("/products/delete/{id}")
+    public String deleteProduct(@PathVariable long id){
+        Product product = productAPI.deleteProduct(id).getBody();
+        return "redirect:/products";
     }
 }
