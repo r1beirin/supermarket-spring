@@ -1,9 +1,7 @@
 package com.springstudie.supermarket.controller;
 
 import com.springstudie.supermarket.model.usecases.Product;
-import com.springstudie.supermarket.repository.ProductRepository;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,13 +11,11 @@ import java.util.List;
 
 @Controller
 public class ProductController {
-    private final ProductRepository productRepository;
 
     private final ProductsAPIController productAPI;
 
-    public ProductController(ProductRepository productRepository, ProductsAPIController productAPI1) {
-        this.productRepository = productRepository;
-        this.productAPI = productAPI1;
+    public ProductController(ProductsAPIController productAPI) {
+        this.productAPI = productAPI;
     }
     @GetMapping("/products")
     public ModelAndView allProducts(){
