@@ -34,7 +34,7 @@ public class ProductController {
 
     @GetMapping("/products/edit/{id}")
     public ModelAndView editProduct(@PathVariable long id){
-        ModelAndView mv = new ModelAndView("productsRegister");
+        ModelAndView mv = new ModelAndView("productsEdit");
         Product product = productAPI.getProduct(id).getBody();
         mv.addObject("product", product);
         return mv;

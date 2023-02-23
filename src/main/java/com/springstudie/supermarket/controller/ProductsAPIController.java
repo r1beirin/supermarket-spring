@@ -80,6 +80,8 @@ public class ProductsAPIController {
 
     /*
      * Method to update a product in API
+     * The first method apply for directly requests from API.
+     * The second method apply for the requests that comes from the /products/register form.
      *
      * @Author: github.com/r1beirin
      * @Year: 2023
@@ -89,16 +91,26 @@ public class ProductsAPIController {
      *  400 - Bad request: irregular parameter in any field
      *  404 - Not found: resource not exist
      */
-    @PutMapping(value = "/{id}")
+    @PutMapping(value = "/{id}", consumes = "application/json")
     public ResponseEntity<Product> updateProduct(@PathVariable long id, JSONObject productUpdated) {
+        return getUpdateProductResponseEntity(productUpdated, id);
+    }
 
-        if(ProductServices.isValidJson(productUpdated.toString())) {
-            if(ProductServices.isValidField(productUpdated)) {
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<Product> updateProduct(@PathVariable long id, Product product){
+        JSONObject productFromJson = new JSONObject();
+        ProductServices.product2json(product, productFromJson);
+
+        return getUpdateProductResponseEntity(productFromJson, id);
+    }
+    public ResponseEntity<Product> getUpdateProductResponseEntity(JSONObject productFromJson, long id) {
+        if(ProductServices.isValidJson(productFromJson.toString())) {
+            if(ProductServices.isValidField(productFromJson)) {
                 Product oldProduct = productRepository.findById(id);
 
                 if(ProductServices.isProductNotExists(oldProduct)) return ProductServices.onNotFoundMessage();
 
-                ProductServices.setProductField(oldProduct, productUpdated);
+                ProductServices.setProductField(oldProduct, productFromJson);
                 productRepository.saveAndFlush(oldProduct);
 
                 return ProductServices.onSuccessMessage();
@@ -106,8 +118,6 @@ public class ProductsAPIController {
         }
         else return ProductServices.onIllegalArgumentMessage();
     }
-
-
 
     /*
      * Method to delete a product in API

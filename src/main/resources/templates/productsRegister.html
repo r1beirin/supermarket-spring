@@ -20,29 +20,24 @@
 <div class="container">
   <h1>Register your product</h1>
   <form action="/api/products/" method="POST">
-    <div th:if="${product}" class="mb-3">
-      <label for="id" class="text-inside">Id</label>
-      <input id="id" name="id" type="text" th:value="${product.id}" class="form-control" readonly>
-    </div>
-
     <div class="mb-3">
       <label for="nameProduct" class="text-inside">Name</label>
-      <input id="nameProduct" name="nameProduct" th:value="${product.nameProduct}" type="text" class="form-control" placeholder="Name of your product" required>
+      <input id="nameProduct" name="nameProduct" type="text" class="form-control" placeholder="Name of your product" required>
     </div>
 
     <div class="mb-3">
       <label for="valueProduct" class="text-inside">Price</label>
-      <input id="valueProduct" name="valueProduct" th:value="${product.valueProduct}"  type="number" class="form-control" placeholder="Value of your product" required step="any">
+      <input id="valueProduct" name="valueProduct" type="number" class="form-control" placeholder="Value of your product" required step="any">
     </div>
 
     <div class="mb-3">
       <label for="descriptionProduct" class="text-inside">Description</label>
-      <input id="descriptionProduct" name="descriptionProduct" th:value="${product.descriptionProduct}"  type="text" class="form-control" placeholder="Description of your product" required>
+      <input id="descriptionProduct" name="descriptionProduct" type="text" class="form-control" placeholder="Description of your product" required>
     </div>
 
     <div class="mb-3">
       <label for="expirationProductAt" class="text-inside">Expiration</label>
-      <input id="expirationProductAt" name="expirationProductAt" th:value="${product.expirationProductAt}"  type="date" class="form-control" placeholder="Expiration date of your product" required>
+      <input id="expirationProductAt" name="expirationProductAt" type="date" class="form-control" placeholder="Expiration date of your product" required>
     </div>
 
     <div class="container-fluid">
