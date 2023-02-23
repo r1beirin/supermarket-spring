@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Supermarket-spring</title>
-  <link href="/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
@@ -17,29 +17,31 @@
   </ul>
 </nav>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Id</th>
-      <th scope="col">Name</th>
-      <th scope="col">Value</th>
-      <th scope="col">Description</th>
-      <th scope="col">Expiration date</th>
-      <th scope="col">Actions</th>
-    </tr>
-  </thead>
+<div class="container-table">
+  <table class="table">
+    <thead class="thead-custom">
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Value</th>
+        <th scope="col">Description</th>
+        <th scope="col">Expiration date</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
 
-  <tbody>
-    <tr th:each="product : ${productList}">
-      <th scope="row" th:text="${product.id}"></th>
-      <td th:text="${product.nameProduct}"></td>
-      <td th:text="${product.valueProduct}"></td>
-      <td th:text="${product.descriptionProduct}"></td>
-      <td th:text="${product.expirationProductAt}"></td>
-      <td>Actions</td>
-    </tr>
-  </tbody>
-</table>
+    <tbody>
+      <tr th:each="product : ${productList}">
+        <th scope="row" th:text="${product.id}"></th>
+        <td th:text="${product.nameProduct}"></td>
+        <td th:text="${product.valueProduct}"></td>
+        <td th:text="${product.descriptionProduct}"></td>
+        <td th:text="${product.expirationProductAt}"></td>
+        <td>Actions</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 <script src="/js/bootstrap.bundle.min.js"></script>
 </body>

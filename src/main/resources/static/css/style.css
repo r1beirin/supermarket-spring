@@ -103,3 +103,12 @@
 .container-fluid{
     text-align: center;
 }
+
+.container-table{
+    margin: 1.5%;
+}
+
+.thead-custom{
+    background-color: #6821e0;
+    color: white;
+}
