@@ -19,7 +19,7 @@
 
 <div class="container">
   <h1>Register your product</h1>
-  <form action="/api/products/" method="POST">
+  <form id="updateProductForm" action="/api/products/" method="POST">
     <div class="mb-3">
       <label for="nameProduct" class="text-inside">Name</label>
       <input id="nameProduct" name="nameProduct" type="text" class="form-control" placeholder="Name of your product" required>
@@ -50,6 +50,29 @@
     </div>
   </form>
 </div>
+
+<script>
+  document.querySelector('#updateProductForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const url = this.getAttribute('action');
+    const formData = new FormData(this);
+
+    fetch(url, {
+      method: 'POST',
+      body: formData
+    })
+            .then(response => {
+              if (response.ok) {
+                alert('Product registred with success!!');
+              } else {
+                alert('Error!');
+              }
+            })
+            .catch(error => {
+              alert('Error!');
+            });
+  });
+</script>
 
 <script src="/js/bootstrap.bundle.min.js"></script>
 </body>
