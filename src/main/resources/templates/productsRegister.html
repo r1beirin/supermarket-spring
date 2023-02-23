@@ -1,10 +1,9 @@
-<!-- This HTML form is based from github.com/Larissakich -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Supermarket-spring</title>
-  <link href="/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
@@ -23,27 +22,27 @@
   <form action="/api/products/" method="POST">
     <div class="mb-3">
       <label for="nameProduct" class="text-inside">Name</label>
-      <input id="nameProduct" type="text" class="form-control" placeholder="Name of your product" required>
+      <input id="nameProduct" name="nameProduct" type="text" class="form-control" placeholder="Name of your product" required>
     </div>
 
     <div class="mb-3">
       <label for="valueProduct" class="text-inside">Price</label>
-      <input id="valueProduct" type="number" class="form-control" placeholder="Value of your product" required step="any">
+      <input id="valueProduct" name="valueProduct" type="number" class="form-control" placeholder="Value of your product" required step="any">
     </div>
 
     <div class="mb-3">
       <label for="descriptionProduct" class="text-inside">Description</label>
-      <input id="descriptionProduct" type="text" class="form-control" placeholder="Description of your product" required>
+      <input id="descriptionProduct" name="descriptionProduct" type="text" class="form-control" placeholder="Description of your product" required>
     </div>
 
     <div class="mb-3">
       <label for="expirationProductAt" class="text-inside">Expiration</label>
-      <input id="expirationProductAt" type="date" class="form-control" placeholder="Expiration date of your product" required>
+      <input id="expirationProductAt" name="expirationProductAt" type="date" class="form-control" placeholder="Expiration date of your product" required>
     </div>
 
     <div class="container-fluid">
       <div class="button">
-        <button type="submit" class="btn btn-light">Register</button>
+        <a class="btn btn-light" href="/products" role="button" type="submit">Register</a>
       </div>
       <div class="button">
         <a class="btn btn-light" href="/products" role="button">Back</a>

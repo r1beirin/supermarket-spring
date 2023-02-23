@@ -1,21 +1,30 @@
 package com.springstudie.supermarket.services;
 
 import com.fasterxml.jackson.core.JacksonException;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import com.springstudie.supermarket.model.usecases.Product;
+import com.springstudie.supermarket.repository.ProductRepository;
 import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import java.time.LocalDate;
 
 public class ProductServices {
+    private static ProductRepository productRepository;
+    ProductServices(ProductRepository productRepository){
+        ProductServices.productRepository = productRepository;
+    }
 
-    public static boolean isProductExists(Product product){
+    /*
+     * This a method to verify if a product object is null.
+     *
+     * @Author: github.com/r1beirin
+     * @Year: 2023
+     */
+    public static boolean isProductNotExists(Product product){
         return product == null;
     }
 
@@ -37,12 +46,17 @@ public class ProductServices {
         return true;
     }
 
-    public static JSONObject obj2Json(Object obj) {
-        try {
-            return (JSONObject) JSONValue.parse(new ObjectMapper().writeValueAsString(obj));
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+    /*
+     * This a method to convert a product object to json object.
+     *
+     * @Author: github.com/r1beirin
+     * @Year: 2023
+     */
+    public static void product2json(Product product, JSONObject json){
+        json.put("nameProduct", product.getNameProduct());
+        json.put("valueProduct", product.getValueProduct());
+        json.put("descriptionProduct", product.getDescriptionProduct());
+        json.put("expirationProductAt", String.valueOf(product.getExpirationProductAt()));
     }
 
     /*
@@ -107,5 +121,18 @@ public class ProductServices {
     @ResponseStatus(value = HttpStatus.OK, reason = "Successful")
     public static ResponseEntity<Product> onSuccessMessage(Product product){
         return ResponseEntity.ok(product);
+    }
+
+    public static ResponseEntity<Product> getPostProductResponseEntity(@RequestBody JSONObject productToBeConverted) {
+        if(ProductServices.isValidJson(productToBeConverted.toString())) {
+            if(ProductServices.isValidField(productToBeConverted)) {
+                Product product = new Product();
+                ProductServices.setProductField(product, productToBeConverted);
+                productRepository.save(product);
+
+                return ProductServices.onSuccessMessage();
+            } else return ProductServices.onIllegalArgumentMessage();
+        }
+        else return ProductServices.onIllegalArgumentMessage();
     }
 }

@@ -1,13 +1,5 @@
 package com.springstudie.supermarket.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.springstudie.supermarket.model.usecases.Product;
 import com.springstudie.supermarket.repository.ProductRepository;
 import com.springstudie.supermarket.services.ProductServices;
@@ -25,9 +17,10 @@ public class ProductsAPIController {
         this.productRepository = productRepository;
     }
 
-
     /*
      * Method to post a product in API
+     * The first method apply for directly requests from API.
+     * The second method apply for the requests that comes from the /products/register form.
      *
      * @Author: github.com/r1beirin
      * @Year: 2023
@@ -38,27 +31,16 @@ public class ProductsAPIController {
      *  422 - Unprocessable Entity: error in any fields.
      */
     @PostMapping( value = "/", consumes = "application/json")
-    public ResponseEntity<Product> postProduct(@RequestBody JSONObject productToBeConverted){
-        return getProductResponseEntity(productToBeConverted);
-    }
-
-    private ResponseEntity<Product> getProductResponseEntity(@RequestBody JSONObject productToBeConverted) {
-        if(ProductServices.isValidJson(productToBeConverted.toString())) {
-            if(ProductServices.isValidField(productToBeConverted)) {
-                Product product = new Product();
-                ProductServices.setProductField(product, productToBeConverted);
-                productRepository.save(product);
-
-                return ProductServices.onSuccessMessage();
-            } else return ProductServices.onIllegalArgumentMessage();
-        }
-        else return ProductServices.onIllegalArgumentMessage();
+    public ResponseEntity<Product> postProduct(@RequestBody JSONObject product){
+        return ProductServices.getPostProductResponseEntity(product);
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity<Product> postProduct(Product productToBeConverted){
-        JSONObject json = ProductServices.obj2Json(productToBeConverted);
-        return getProductResponseEntity(json);
+    public ResponseEntity<Product> postProduct(Product product){
+        JSONObject productFromJson = new JSONObject();
+        ProductServices.product2json(product, productFromJson);
+
+        return ProductServices.getPostProductResponseEntity(productFromJson);
     }
 
     /*
@@ -75,7 +57,7 @@ public class ProductsAPIController {
     public ResponseEntity<Product> getProduct(@PathVariable long id){
         Product product = productRepository.findById(id);
 
-        if(ProductServices.isProductExists(product)) return ProductServices.onNotFoundMessage();
+        if(ProductServices.isProductNotExists(product)) return ProductServices.onNotFoundMessage();
         else return ProductServices.onSuccessMessage(product);
     }
 
@@ -102,7 +84,7 @@ public class ProductsAPIController {
             if(ProductServices.isValidField(productUpdated)) {
                 Product oldProduct = productRepository.findById(id);
 
-                if(ProductServices.isProductExists(oldProduct)) return ProductServices.onNotFoundMessage();
+                if(ProductServices.isProductNotExists(oldProduct)) return ProductServices.onNotFoundMessage();
 
                 ProductServices.setProductField(oldProduct, productUpdated);
                 productRepository.saveAndFlush(oldProduct);
@@ -129,7 +111,7 @@ public class ProductsAPIController {
     public ResponseEntity<Product> deleteProduct(@PathVariable long id){
         Product product = productRepository.findById(id);
 
-        if(ProductServices.isProductExists(product)) return ProductServices.onNotFoundMessage();
+        if(ProductServices.isProductNotExists(product)) return ProductServices.onNotFoundMessage();
         else{
             productRepository.deleteById(id);
             return ProductServices.onSuccessMessage();
