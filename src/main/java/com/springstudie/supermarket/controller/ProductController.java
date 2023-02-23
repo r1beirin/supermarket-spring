@@ -32,8 +32,7 @@ public class ProductController {
 
     @RequestMapping(value = "/products/register", method = RequestMethod.GET)
     public ModelAndView registerProduct(){
-        ModelAndView mv = new ModelAndView("productsRegister");
 
-        return mv;
+        return new ModelAndView("productsRegister");
     }
 }
