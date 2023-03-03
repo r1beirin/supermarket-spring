@@ -1,0 +1,52 @@
+version: '1'
+
+services:
+  # Service 1: mysql database image creation
+  db:
+    image: mysql:latest
+    container_name: mysql-db
+    networks:
+      - supermarket-app-network
+    environment:
+      MYSQL_ROOT_PASSWORD: Super@Market@123@
+      MYSQL_USER: teste
+      MYSQL_PASSWORD: testado
+      MYSQL_DATABASE: supermarket
+    volumes:
+      - vol:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    restart: always
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+
+  # Service 2: Supermarket image creation
+  supermarket-spring:
+    build:
+      context: .
+    image: ribeirin/supermarket:latest
+    container_name: supermarket-app
+    ports:
+      - "8080:8080"
+    networks:
+      - supermarket-app-network
+    restart: always
+    environment:
+      MYSQL_HOST: mysql-db
+      MYSQL_USER: teste
+      MYSQL_PASS: testado
+      MYSQL_DB: supermarket
+      MYSQL_PORT: 3306
+    depends_on:
+      db:
+        condition: service_healthy
+
+networks:
+  supermarket-app-network:
+    name: supermarket-app-network
+
+volumes:
+  vol:
