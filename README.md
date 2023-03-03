@@ -5,7 +5,7 @@ The technologies used for the development of this project were:
 - [Ubuntu 22.04](https://ubuntu.com/download)
 - [Java 19](https://www.oracle.com/br/java/technologies/downloads/)
 - [Spring boot 3.0.2](https://spring.io/projects/spring-boot)
-- [Apache Maven 3.6.3](https://maven.apache.org/download.cgi)
+- [Apache Maven 3.9.0](https://maven.apache.org/download.cgi)
 - [MySQL 8.0.32](https://dev.mysql.com/downloads/installer/)
 - [Docker 23.0.1](https://docs.docker.com/desktop/install/ubuntu/)
 
@@ -26,4 +26,6 @@ We need grant all privileges to created user to make changes in our database.
 **_Warning_**: the best practice to MySQL accounts it's grants just basic permissions. But for this project, only for the practice project, I grant all privileges to this account.
 
 ## Docker
-1. We need package first `mvn package`
+1. We need package first `mvn package`.
+2. To make changes in `application.properties` just modify `docker-compose.yml` with you modifications.
+3. Make the docker with `sudo docker-compose up -d --build`
