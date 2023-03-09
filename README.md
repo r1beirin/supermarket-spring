@@ -27,7 +27,7 @@ We need grant all privileges to created user to make changes in our database.
 
 ## Run withour Docker
 1. First package the project: `mvn package`
-2. Run with `java -jar target/supermarket-0.0.1-SNAPSHOT.jar
+2. Run with `java -jar target/supermarket-0.0.1-SNAPSHOT.jar`
 
 
 ## Docker
