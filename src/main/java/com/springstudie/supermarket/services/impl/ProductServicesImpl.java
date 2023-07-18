@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springstudie.supermarket.entity.Product;
+import com.springstudie.supermarket.repository.ProductRepository;
 import com.springstudie.supermarket.services.ProductServices;
 import org.json.simple.JSONObject;
 import org.springframework.http.HttpStatus;
@@ -11,9 +12,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class ProductServicesImpl implements ProductServices {
+    private final ProductRepository productRepository;
+
+    public ProductServicesImpl(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
 
     @Override
     public boolean isProductNotExists(Product product){
@@ -27,10 +34,11 @@ public class ProductServicesImpl implements ProductServices {
 
         try{
             mapper.readTree(json);
-        }catch (JacksonException e){
+            return true;
+        }
+        catch (JacksonException e){
             return false;
         }
-        return true;
     }
 
     @Override
@@ -93,5 +101,70 @@ public class ProductServicesImpl implements ProductServices {
     @ResponseStatus(value = HttpStatus.OK, reason = "Successful")
     public ResponseEntity<Product> onSuccessMessage(Product product){
         return ResponseEntity.ok(product);
+    }
+
+    @Override
+    public ResponseEntity<Product> delete(long id) {
+
+        Product product = productRepository.findById(id);
+
+        if(this.isProductNotExists(product)) return this.onNotFoundMessage();
+        else{
+            productRepository.deleteById(id);
+            return this.onSuccessMessage();
+        }
+    }
+
+    @Override
+    public ResponseEntity<Product> getUpdateProductResponseEntity(JSONObject productFromJson, long id) {
+        if(this.isValidJson(productFromJson.toString())) {
+            if(this.isValidField(productFromJson)) {
+                Product oldProduct = productRepository.findById(id);
+
+                if(this.isProductNotExists(oldProduct))
+                    return this.onNotFoundMessage();
+
+                this.setProductField(oldProduct, productFromJson);
+                productRepository.saveAndFlush(oldProduct);
+
+                return this.onSuccessMessage();
+            }
+            else
+                return this.onIllegalArgumentMessage();
+        }
+        else
+            return this.onIllegalArgumentMessage();
+    }
+
+    @Override
+    public List<Product> getAllProducts() {
+        return productRepository.findAll();
+    }
+
+    @Override
+    public ResponseEntity<Product> getProduct(long id) {
+        Product product = productRepository.findById(id);
+
+        if(this.isProductNotExists(product))
+            return this.onNotFoundMessage();
+        else
+            return this.onSuccessMessage(product);
+    }
+
+    @Override
+    public ResponseEntity<Product> getPostProductResponseEntity(JSONObject productFromJson) {
+        if(this.isValidJson(productFromJson.toString())) {
+            if(this.isValidField(productFromJson)) {
+                Product product = new Product();
+                this.setProductField(product, productFromJson);
+                productRepository.save(product);
+
+                return this.onSuccessMessage();
+            }
+            else
+                return this.onIllegalArgumentMessage();
+        }
+        else
+            return this.onIllegalArgumentMessage();
     }
 }
