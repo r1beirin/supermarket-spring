@@ -3,7 +3,7 @@ package com.springstudie.supermarket.services.impl;
 import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.springstudie.supermarket.model.Product;
+import com.springstudie.supermarket.entity.Product;
 import com.springstudie.supermarket.services.ProductServices;
 import org.json.simple.JSONObject;
 import org.springframework.http.HttpStatus;

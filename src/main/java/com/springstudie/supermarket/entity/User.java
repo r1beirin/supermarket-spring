@@ -1,4 +1,4 @@
-package com.springstudie.supermarket.model;
+package com.springstudie.supermarket.entity;
 
 import jakarta.persistence.*;
 

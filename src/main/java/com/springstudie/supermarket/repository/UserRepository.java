@@ -1,6 +1,6 @@
 package com.springstudie.supermarket.repository;
 
-import com.springstudie.supermarket.model.User;
+import com.springstudie.supermarket.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

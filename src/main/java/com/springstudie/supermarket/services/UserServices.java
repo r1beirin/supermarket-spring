@@ -1,7 +1,6 @@
 package com.springstudie.supermarket.services;
 
-import com.springstudie.supermarket.model.Product;
-import com.springstudie.supermarket.model.User;
+import com.springstudie.supermarket.entity.User;
 import org.springframework.stereotype.Service;
 
 @Service

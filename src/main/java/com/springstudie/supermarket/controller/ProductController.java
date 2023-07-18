@@ -1,6 +1,6 @@
 package com.springstudie.supermarket.controller;
 
-import com.springstudie.supermarket.model.Product;
+import com.springstudie.supermarket.entity.Product;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

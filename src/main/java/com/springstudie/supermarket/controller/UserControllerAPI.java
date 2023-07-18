@@ -1,6 +1,6 @@
 package com.springstudie.supermarket.controller;
 
-import com.springstudie.supermarket.model.User;
+import com.springstudie.supermarket.entity.User;
 import com.springstudie.supermarket.repository.UserRepository;
 import com.springstudie.supermarket.services.UserServices;
 import org.json.simple.JSONObject;

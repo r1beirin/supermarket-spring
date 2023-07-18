@@ -1,6 +1,6 @@
 package com.springstudie.supermarket.services;
 
-import com.springstudie.supermarket.model.Product;
+import com.springstudie.supermarket.entity.Product;
 import org.json.simple.JSONObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;

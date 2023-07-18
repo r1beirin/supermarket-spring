@@ -1,6 +1,6 @@
 package com.springstudie.supermarket.services.impl;
 
-import com.springstudie.supermarket.model.User;
+import com.springstudie.supermarket.entity.User;
 import com.springstudie.supermarket.services.UserServices;
 import org.springframework.stereotype.Service;
 
