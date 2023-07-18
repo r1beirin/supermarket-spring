@@ -12,21 +12,19 @@ import java.time.LocalDate;
 
 public class ProductServices {
 
-    /*
+    /**
      * This a method to verify if a product object is null.
-     *
-     * @Author: github.com/r1beirin
-     * @Year: 2023
+     * @param product Product object
+     * @return boolean
      */
     public static boolean isProductNotExists(Product product){
         return product == null;
     }
 
-    /*
+    /**
      * This a method to json request validator.
-     *
-     * @Author: github.com/r1beirin
-     * @Year: 2023
+     * @param json string
+     * @return boolean
      */
     public static boolean isValidJson(String json) {
         ObjectMapper mapper = new ObjectMapper()
@@ -40,11 +38,10 @@ public class ProductServices {
         return true;
     }
 
-    /*
+    /**
      * This a method to convert a product object to json object.
-     *
-     * @Author: github.com/r1beirin
-     * @Year: 2023
+     * @param product Product object
+     * @param json JSONObject
      */
     public static void product2json(Product product, JSONObject json){
         json.put("nameProduct", product.getNameProduct());
@@ -53,13 +50,12 @@ public class ProductServices {
         json.put("expirationProductAt", String.valueOf(product.getExpirationProductAt()));
     }
 
-    /*
+    /**
      * This method validate a field in json request.
      * Regex: [a-zA-Z\\s]+ -> to validate just word.
      * Regex: ^ *$ -> to validate wordspaces.
-     *
-     * @Author: github.com/r1beirin
-     * @Year: 2023
+     * @param product JSONObject object
+     * @return boolean
      */
     public static boolean isValidField(JSONObject product){
         return  product.get("nameProduct") != null &&
@@ -73,11 +69,10 @@ public class ProductServices {
                 !product.get("expirationProductAt").toString().matches("^ *$");
     }
 
-    /*
+    /**
      * This method set a field in json request.
-     *
-     * @Author: github.com/r1beirin
-     * @Year: 2023
+     * @param product object
+     * @param productToBeConverted object
      */
     public static void setProductField(Product product, JSONObject productToBeConverted){
         String nameProduct = (String) productToBeConverted.get("nameProduct");
@@ -91,11 +86,9 @@ public class ProductServices {
         product.setExpirationProductAt(LocalDate.parse(expirationProductAt));
     }
 
-    /*
+    /**
      * Below are methods to flag the status code on requests.
-     *
-     * @Author: github.com/r1beirin
-     * @Year: 2023
+     * @return ResponseEntity
      */
     @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Some parameters are invalid")
     public static ResponseEntity<Product> onIllegalArgumentMessage() {
