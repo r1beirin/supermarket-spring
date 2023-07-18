@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.NoSuchAlgorithmException;
+
 @RestController
 @RequestMapping( "/api/user")
 public class UserControllerAPI {
@@ -22,6 +24,7 @@ public class UserControllerAPI {
     public JSONObject registerUser(User user){
         JSONObject jsonObject = new JSONObject();
         if(UserServices.isValidField(user)){
+            UserServices.encryptPassword(user);
             userRepository.save(user);
             jsonObject.put("valid", true);
             return jsonObject;
