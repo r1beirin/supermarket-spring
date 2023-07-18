@@ -4,8 +4,10 @@ import com.springstudie.supermarket.entity.Product;
 import com.springstudie.supermarket.services.ResponseMessagesService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+@Service
 public class ResponseMessageServiceImpl implements ResponseMessagesService {
     @Override
     @ResponseStatus(value = HttpStatus.OK, reason = "Successful")
