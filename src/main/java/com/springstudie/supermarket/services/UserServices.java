@@ -10,8 +10,8 @@ public class UserServices {
      * This method validate a field in request.
      * Regex: [a-zA-Z\\s]+ -> to validate just word.
      * Regex: ^ *$ -> to validate wordspaces.
-     * @param user
-     * @return
+     * @param user User object
+     * @return boolean
      */
     public static boolean isValidField(User user){
         return  user.getName() != null &&
@@ -25,7 +25,7 @@ public class UserServices {
 
     /**
      * This method encrypt a password with SHA-256 and encode to hexadecimal.
-     * @param user
+     * @param user User object
      */
     public static void encryptPassword(User user){
         String password = user.getPassword();
@@ -48,9 +48,9 @@ public class UserServices {
 
     /**
      * This method is used to compare two passwords. One is input from user, second is output of existing user.
-     * @param userFromLogin
-     * @param userFromQuery
-     * @return
+     * @param userFromLogin User object
+     * @param userFromQuery User object
+     * @return boolean
      */
     public static boolean comparePassword(User userFromLogin, User userFromQuery){
         encryptPassword(userFromLogin);
