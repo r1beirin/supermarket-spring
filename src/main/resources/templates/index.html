@@ -2,21 +2,30 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Supermarket-spring</title>
-  <link href="/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/header.css"> 
 </head>
 <body>
+  <header>
+    <div>
+      <nav id="menu-horizontal">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/products">Products</a></li>
+            <li><a href="/products/register">Register a product</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div>
+      <nav id="menu-horizontal">
+        <ul>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/register">Register</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
-<nav id="menu-horizontal">
-  <ul>
-    <li><a th:href="@{/}">Home</a></li>
-    <li><a th:href="@{/products}">Products</a></li>
-    <li><a th:href="@{/products/register}">Register a product</a></li>
-    <li><a href="/login/">Login</a></li>
-  </ul>
-</nav>
-
-<script src="/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -1,37 +1,10 @@
 /* <!-- The part of form is based from github.com/Larissakich -->*/
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap');
 *{
-    margin: 0 auto;
+    margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Ubuntu', sans-serif;
-}
-
-#menu-horizontal{
-    list-style: none;
-    padding: 0;
-    background-color: rgba(0, 0, 0, 0.81);
-}
-
-#menu-horizontal ul li{
-    display: inline;
-}
-
-#menu-horizontal ul li a{
-    color: white;
-    padding: 24px;
-    display: inline-block;
-    text-decoration: none;
-}
-
-#menu-horizontal ul li a:hover{
-    background-color: #6821e0;
-    transition: background .5s;
-}
-
-#menu-horizontal ul li:last-child a{
-    float: right;
-    background-color: #6821e0;
 }
 
 .container{
