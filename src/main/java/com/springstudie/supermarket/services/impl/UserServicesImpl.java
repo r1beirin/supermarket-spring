@@ -4,11 +4,11 @@ import com.springstudie.supermarket.entity.User;
 import com.springstudie.supermarket.repository.UserRepository;
 import com.springstudie.supermarket.services.UserServices;
 import org.json.simple.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
+import java.util.Optional;
 
 @Service
 public class UserServicesImpl implements UserServices {
@@ -99,5 +99,16 @@ public class UserServicesImpl implements UserServices {
     @Override
     public boolean existByEmail(String email) {
         return userRepository.findByEmail(email).isPresent();
+    }
+
+    @Override
+    public void login(String email, String password, JSONObject jsonObject) {
+        Optional<User> user = userRepository.findByEmail(email);
+        if(existByEmail(email) && comparePassword(password, user.get())){
+            jsonObject.put("valid", true);
+        }
+        else{
+            jsonObject.put("valid", false);
+        }
     }
 }

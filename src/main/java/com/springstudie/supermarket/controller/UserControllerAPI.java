@@ -11,12 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping( "/api/user")
 public class UserControllerAPI {
-    private final UserRepository userRepository;
-
     private final UserServices userServices;
 
-    public UserControllerAPI(UserRepository userRepository, UserServices userServices) {
-        this.userRepository = userRepository;
+    public UserControllerAPI(UserServices userServices) {
         this.userServices = userServices;
     }
 
@@ -32,14 +29,9 @@ public class UserControllerAPI {
     @PostMapping(value = "/login/")
     public JSONObject loginUser(String email, String password){
         JSONObject jsonObject = new JSONObject();
-        User user = new User();
 
-        if(userServices.comparePassword(password, user)){
-            jsonObject.put("valid", true);
-            return jsonObject;
-        }
+        userServices.login(email, password, jsonObject);
 
-        jsonObject.put("valid", false);
         return jsonObject;
     }
 }
