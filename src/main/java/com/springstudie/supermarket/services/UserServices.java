@@ -9,4 +9,5 @@ public interface UserServices {
     void encryptPassword(User user);
     String encryptPassword(String password);
     boolean comparePassword(String password, User userFromQuery);
+    boolean existByEmail(String email);
 }

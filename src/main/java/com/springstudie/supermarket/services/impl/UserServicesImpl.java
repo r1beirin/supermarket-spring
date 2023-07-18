@@ -1,7 +1,9 @@
 package com.springstudie.supermarket.services.impl;
 
 import com.springstudie.supermarket.entity.User;
+import com.springstudie.supermarket.repository.UserRepository;
 import com.springstudie.supermarket.services.UserServices;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
@@ -9,6 +11,11 @@ import java.security.MessageDigest;
 
 @Service
 public class UserServicesImpl implements UserServices {
+    private final UserRepository userRepository;
+
+    public UserServicesImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     /**
      * This method validate a field in request.
@@ -83,5 +90,10 @@ public class UserServicesImpl implements UserServices {
         password = encryptPassword(password);
 
         return userFromQuery.getPassword().equals(password);
+    }
+
+    @Override
+    public boolean existByEmail(String email) {
+        return userRepository.findByEmail(email).isPresent();
     }
 }
