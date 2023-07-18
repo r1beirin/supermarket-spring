@@ -40,7 +40,7 @@ public class ProductController {
 
     @GetMapping("/products/delete/{id}")
     public String deleteProduct(@PathVariable long id){
-        Product product = productAPI.deleteProduct(id).getBody();
+        productAPI.deleteProduct(id).getBody();
         return "redirect:/products";
     }
 }
