@@ -6,20 +6,21 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springstudie.supermarket.entity.Product;
 import com.springstudie.supermarket.repository.ProductRepository;
 import com.springstudie.supermarket.services.ProductServices;
+import com.springstudie.supermarket.services.ResponseMessagesService;
 import org.json.simple.JSONObject;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import java.time.LocalDate;
 import java.util.List;
 
 @Service
 public class ProductServicesImpl implements ProductServices {
     private final ProductRepository productRepository;
+    private final ResponseMessagesService responseMessagesService;
 
-    public ProductServicesImpl(ProductRepository productRepository) {
+    public ProductServicesImpl(ProductRepository productRepository, ResponseMessagesService responseMessagesService) {
         this.productRepository = productRepository;
+        this.responseMessagesService = responseMessagesService;
     }
 
     @Override
@@ -78,29 +79,6 @@ public class ProductServicesImpl implements ProductServices {
         product.setValueProduct(valueProduct);
         product.setDescriptionProduct(descriptionProduct);
         product.setExpirationProductAt(LocalDate.parse(expirationProductAt));
-    }
-
-    @Override
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Some parameters are invalid")
-    public ResponseEntity<Product> onIllegalArgumentMessage() {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-    }
-    @Override
-    @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "Resource not exist")
-    public ResponseEntity<Product> onNotFoundMessage(){
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-    }
-
-    @Override
-    @ResponseStatus(value = HttpStatus.OK, reason = "Successful")
-    public ResponseEntity<Product> onSuccessMessage(){
-        return ResponseEntity.ok().build();
-    }
-
-    @Override
-    @ResponseStatus(value = HttpStatus.OK, reason = "Successful")
-    public ResponseEntity<Product> onSuccessMessage(Product product){
-        return ResponseEntity.ok(product);
     }
 
     @Override
