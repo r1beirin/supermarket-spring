@@ -1,11 +1,9 @@
 package com.springstudie.supermarket.controller;
 
-import com.springstudie.supermarket.model.usecases.Product;
+import com.springstudie.supermarket.entity.Product;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
@@ -42,7 +40,7 @@ public class ProductController {
 
     @GetMapping("/products/delete/{id}")
     public String deleteProduct(@PathVariable long id){
-        Product product = productAPI.deleteProduct(id).getBody();
+        productAPI.deleteProduct(id).getBody();
         return "redirect:/products";
     }
 }

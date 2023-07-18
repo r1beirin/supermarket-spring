@@ -19,8 +19,7 @@ async function enviaForm(form){
 
         const responseJS = await response.json();
 
-        if(responseJS.valid) console.log("ok");
-        else alert("Verifique os campos");
+        if(!responseJS.valid) alert("Verifique os campos");
     } catch (e) {
         console.error(e);
     }

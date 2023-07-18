@@ -11,4 +11,7 @@ public class UserController {
     public ModelAndView register(){
         return new ModelAndView("register");
     }
+
+    @GetMapping("/login")
+    public ModelAndView login() { return new ModelAndView("login"); }
 }

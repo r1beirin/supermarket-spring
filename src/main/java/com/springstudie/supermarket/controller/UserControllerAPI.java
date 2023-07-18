@@ -1,6 +1,6 @@
 package com.springstudie.supermarket.controller;
 
-import com.springstudie.supermarket.model.usecases.User;
+import com.springstudie.supermarket.entity.User;
 import com.springstudie.supermarket.repository.UserRepository;
 import com.springstudie.supermarket.services.UserServices;
 import org.json.simple.JSONObject;
@@ -8,29 +8,30 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.security.NoSuchAlgorithmException;
-
 @RestController
 @RequestMapping( "/api/user")
 public class UserControllerAPI {
+    private final UserServices userServices;
 
-    private final UserRepository userRepository;
-
-    public UserControllerAPI(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserControllerAPI(UserServices userServices) {
+        this.userServices = userServices;
     }
 
-    @PostMapping(value = "/")
+    @PostMapping(value = "/create/")
     public JSONObject registerUser(User user){
         JSONObject jsonObject = new JSONObject();
-        if(UserServices.isValidField(user)){
-            UserServices.encryptPassword(user);
-            userRepository.save(user);
-            jsonObject.put("valid", true);
-            return jsonObject;
-        }
 
-        jsonObject.put("valid", false);
+        userServices.register(user, jsonObject);
+
+        return jsonObject;
+    }
+
+    @PostMapping(value = "/login/")
+    public JSONObject loginUser(String email, String password){
+        JSONObject jsonObject = new JSONObject();
+
+        userServices.login(email, password, jsonObject);
+
         return jsonObject;
     }
 }

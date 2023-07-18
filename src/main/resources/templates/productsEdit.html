@@ -2,56 +2,69 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Supermarket-spring</title>
-  <link href="/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/header.css">
+  <link rel="stylesheet" href="/css/productForm.css">
 </head>
 <body>
-
-<nav id="menu-horizontal">
-  <ul>
-    <li><a th:href="@{/}">Home</a></li>
-    <li><a th:href="@{/products}">Products</a></li>
-    <li><a th:href="@{/products/register}">Register a product</a></li>
-    <li><a href="/login/">Login</a></li>
-  </ul>
-</nav>
-
-<div class="container">
-  <h1>Edit your product</h1>
-
-  <form id="updateProductForm" th:object="${product}" th:action="@{/api/products/__${product.id}__}" method="post">
-    <input type="hidden" name="_method" value="PUT" />
-    <div class="mb-3">
-      <label for="nameProduct" class="text-inside">Name</label>
-      <input id="nameProduct" name="nameProduct" th:value="${product?.nameProduct}" type="text" class="form-control" placeholder="Name of your product" required>
+  <header>
+    <div>
+      <nav id="menu-horizontal">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/products">Products</a></li>
+            <li><a href="/products/register">Register a product</a></li>
+        </ul>
+      </nav>
     </div>
-
-    <div class="mb-3">
-      <label for="valueProduct" class="text-inside">Price</label>
-      <input id="valueProduct" name="valueProduct" th:value="${product?.valueProduct}"  type="number" class="form-control" placeholder="Value of your product" required step="any">
+    <div>
+      <nav id="menu-horizontal">
+        <ul>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/register">Register</a></li>
+        </ul>
+      </nav>
     </div>
+  </header>
 
-    <div class="mb-3">
-      <label for="descriptionProduct" class="text-inside">Description</label>
-      <input id="descriptionProduct" name="descriptionProduct" th:value="${product?.descriptionProduct}"  type="text" class="form-control" placeholder="Description of your product" required>
+  <main>
+    <div class="container">
+      <h1>Edit your product</h1>
+    
+      <form id="updateProductForm" tabindex="1" th:object="${product}" th:action="@{/api/products/__${product.id}__}" method="post">
+        <input type="hidden" name="_method" value="PUT" />
+        <div>
+          <label>Name</label>
+          <input name="nameProduct" th:value="${product?.nameProduct}" type="text" class="form-input" placeholder="Name of your product" required>
+        </div>
+    
+        <div>
+          <label>Price</label>
+          <input name="valueProduct" th:value="${product?.valueProduct}"  type="number" class="form-input" placeholder="Value of your product" required step="any">
+        </div>
+    
+        <div>
+          <label>Expiration</label>
+          <input name="expirationProductAt" th:value="${product?.expirationProductAt}"  type="date" class="form-input" placeholder="Expiration date of your product" required>
+        </div>
+    
+        <div>
+          <label>Description</label>
+          <input name="descriptionProduct" th:value="${product?.descriptionProduct}" class="form-input" placeholder="Description of your product" required>
+        </div>
+    
+        <div>
+          <div class="button">
+            <button type="submit" class="form-button">Edit</button>
+          </div>
+          <div class="button">
+            <a href="/products"><button type="button" class="form-button">Back</button></a>
+          </div>
+        </div>
+      </form>
     </div>
-
-    <div class="mb-3">
-      <label for="expirationProductAt" class="text-inside">Expiration</label>
-      <input id="expirationProductAt" name="expirationProductAt" th:value="${product?.expirationProductAt}"  type="date" class="form-control" placeholder="Expiration date of your product" required>
-    </div>
-
-    <div class="container-fluid">
-      <div class="button">
-        <button type="submit" class="btn btn-light">Edit</button>
-      </div>
-      <div class="button">
-        <a class="btn btn-light" href="/products" role="button">Back</a>
-      </div>
-    </div>
-  </form>
-</div>
+  </main>
 
 <script>
   document.querySelector('#updateProductForm').addEventListener('submit', function(event) {
@@ -77,6 +90,5 @@
             });
   });
 </script>
-<script src="/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
