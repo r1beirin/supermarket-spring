@@ -23,21 +23,16 @@ public class UserControllerAPI {
     @PostMapping(value = "/create/")
     public JSONObject registerUser(User user){
         JSONObject jsonObject = new JSONObject();
-        if(userServices.isValidField(user)){
-            userServices.encryptPassword(user);
-            userRepository.save(user);
-            jsonObject.put("valid", true);
-            return jsonObject;
-        }
 
-        jsonObject.put("valid", false);
+        userServices.register(user, jsonObject);
+
         return jsonObject;
     }
 
     @PostMapping(value = "/login/")
     public JSONObject loginUser(String email, String password){
         JSONObject jsonObject = new JSONObject();
-        User user = userRepository.findByEmail(email);
+        User user = new User();
 
         if(userServices.comparePassword(password, user)){
             jsonObject.put("valid", true);
