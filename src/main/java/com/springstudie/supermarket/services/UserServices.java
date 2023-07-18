@@ -71,7 +71,7 @@ public class UserServices {
 
     /**
      * This method is used to compare two passwords. One is input from user, second is output of existing user.
-     * @param userFromLogin User object
+     * @param password String
      * @param userFromQuery User object
      * @return boolean
      */
