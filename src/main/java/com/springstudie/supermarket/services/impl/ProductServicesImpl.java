@@ -86,10 +86,11 @@ public class ProductServicesImpl implements ProductServices {
 
         Product product = productRepository.findById(id);
 
-        if(this.isProductNotExists(product)) return this.onNotFoundMessage();
+        if(this.isProductNotExists(product))
+            return responseMessagesService.onNotFoundMessage();
         else{
             productRepository.deleteById(id);
-            return this.onSuccessMessage();
+            return responseMessagesService.onSuccessMessage();
         }
     }
 
@@ -100,18 +101,18 @@ public class ProductServicesImpl implements ProductServices {
                 Product oldProduct = productRepository.findById(id);
 
                 if(this.isProductNotExists(oldProduct))
-                    return this.onNotFoundMessage();
+                    return responseMessagesService.onNotFoundMessage();
 
                 this.setProductField(oldProduct, productFromJson);
                 productRepository.saveAndFlush(oldProduct);
 
-                return this.onSuccessMessage();
+                return responseMessagesService.onSuccessMessage();
             }
             else
-                return this.onIllegalArgumentMessage();
+                return responseMessagesService.onIllegalArgumentMessage();
         }
         else
-            return this.onIllegalArgumentMessage();
+            return responseMessagesService.onIllegalArgumentMessage();
     }
 
     @Override
@@ -124,9 +125,9 @@ public class ProductServicesImpl implements ProductServices {
         Product product = productRepository.findById(id);
 
         if(this.isProductNotExists(product))
-            return this.onNotFoundMessage();
+            return responseMessagesService.onNotFoundMessage();
         else
-            return this.onSuccessMessage(product);
+            return responseMessagesService.onSuccessMessage(product);
     }
 
     @Override
@@ -137,12 +138,12 @@ public class ProductServicesImpl implements ProductServices {
                 this.setProductField(product, productFromJson);
                 productRepository.save(product);
 
-                return this.onSuccessMessage();
+                return responseMessagesService.onSuccessMessage();
             }
             else
-                return this.onIllegalArgumentMessage();
+                return responseMessagesService.onIllegalArgumentMessage();
         }
         else
-            return this.onIllegalArgumentMessage();
+            return responseMessagesService.onIllegalArgumentMessage();
     }
 }
