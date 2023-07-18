@@ -25,6 +25,7 @@ public class UserServicesImpl implements UserServices {
      * @param user User object
      * @return boolean
      */
+    @Override
     public boolean isValidField(User user){
         return  user.getName() != null &&
                 user.getName().matches("[a-zA-Z\\s]+") &&
@@ -39,6 +40,7 @@ public class UserServicesImpl implements UserServices {
      * This method encrypt a password with SHA-256 and encode to hexadecimal.
      * @param user User object
      */
+    @Override
     public void encryptPassword(User user){
         String password = user.getPassword();
         StringBuilder hexStringPass = new StringBuilder();
@@ -63,6 +65,7 @@ public class UserServicesImpl implements UserServices {
      * @param password String
      * @return String
      */
+    @Override
     public String encryptPassword(String password){
         StringBuilder hexStringPass = new StringBuilder();
 
@@ -87,6 +90,7 @@ public class UserServicesImpl implements UserServices {
      * @param userFromQuery User object
      * @return boolean
      */
+    @Override
     public boolean comparePassword(String password, User userFromQuery){
         password = encryptPassword(password);
 
