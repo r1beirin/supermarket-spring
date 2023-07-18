@@ -11,10 +11,12 @@ import java.util.List;
 @RestController
 @RequestMapping( "/api/products")
 public class ProductsAPIController {
-
     private final ProductRepository productRepository;
-    ProductsAPIController(ProductRepository productRepository){
+    private final ProductServices productServices;
+
+    ProductsAPIController(ProductRepository productRepository, ProductServices productServices){
         this.productRepository = productRepository;
+        this.productServices = productServices;
     }
 
     /*
@@ -38,21 +40,21 @@ public class ProductsAPIController {
     @PostMapping(value = "/")
     public ResponseEntity<Product> postProduct(Product product){
         JSONObject productFromJson = new JSONObject();
-        ProductServices.product2json(product, productFromJson);
+        productServices.product2json(product, productFromJson);
 
         return getPostProductResponseEntity(productFromJson);
     }
     public ResponseEntity<Product> getPostProductResponseEntity(@RequestBody JSONObject productFromJson) {
-        if(ProductServices.isValidJson(productFromJson.toString())) {
-            if(ProductServices.isValidField(productFromJson)) {
+        if(productServices.isValidJson(productFromJson.toString())) {
+            if(productServices.isValidField(productFromJson)) {
                 Product product = new Product();
-                ProductServices.setProductField(product, productFromJson);
+                productServices.setProductField(product, productFromJson);
                 productRepository.save(product);
 
-                return ProductServices.onSuccessMessage();
-            } else return ProductServices.onIllegalArgumentMessage();
+                return productServices.onSuccessMessage();
+            } else return productServices.onIllegalArgumentMessage();
         }
-        else return ProductServices.onIllegalArgumentMessage();
+        else return productServices.onIllegalArgumentMessage();
     }
 
     /*
@@ -69,8 +71,8 @@ public class ProductsAPIController {
     public ResponseEntity<Product> getProduct(@PathVariable long id){
         Product product = productRepository.findById(id);
 
-        if(ProductServices.isProductNotExists(product)) return ProductServices.onNotFoundMessage();
-        else return ProductServices.onSuccessMessage(product);
+        if(productServices.isProductNotExists(product)) return productServices.onNotFoundMessage();
+        else return productServices.onSuccessMessage(product);
     }
 
     @GetMapping("/")
@@ -99,24 +101,24 @@ public class ProductsAPIController {
     @PutMapping(value = "/{id}")
     public ResponseEntity<Product> updateProduct(@PathVariable long id, Product product){
         JSONObject productFromJson = new JSONObject();
-        ProductServices.product2json(product, productFromJson);
+        productServices.product2json(product, productFromJson);
 
         return getUpdateProductResponseEntity(productFromJson, id);
     }
     public ResponseEntity<Product> getUpdateProductResponseEntity(JSONObject productFromJson, long id) {
-        if(ProductServices.isValidJson(productFromJson.toString())) {
-            if(ProductServices.isValidField(productFromJson)) {
+        if(productServices.isValidJson(productFromJson.toString())) {
+            if(productServices.isValidField(productFromJson)) {
                 Product oldProduct = productRepository.findById(id);
 
-                if(ProductServices.isProductNotExists(oldProduct)) return ProductServices.onNotFoundMessage();
+                if(productServices.isProductNotExists(oldProduct)) return productServices.onNotFoundMessage();
 
-                ProductServices.setProductField(oldProduct, productFromJson);
+                productServices.setProductField(oldProduct, productFromJson);
                 productRepository.saveAndFlush(oldProduct);
 
-                return ProductServices.onSuccessMessage();
-            } else return ProductServices.onIllegalArgumentMessage();
+                return productServices.onSuccessMessage();
+            } else return productServices.onIllegalArgumentMessage();
         }
-        else return ProductServices.onIllegalArgumentMessage();
+        else return productServices.onIllegalArgumentMessage();
     }
 
     /*
@@ -133,10 +135,10 @@ public class ProductsAPIController {
     public ResponseEntity<Product> deleteProduct(@PathVariable long id){
         Product product = productRepository.findById(id);
 
-        if(ProductServices.isProductNotExists(product)) return ProductServices.onNotFoundMessage();
+        if(productServices.isProductNotExists(product)) return productServices.onNotFoundMessage();
         else{
             productRepository.deleteById(id);
-            return ProductServices.onSuccessMessage();
+            return productServices.onSuccessMessage();
         }
     }
 }
