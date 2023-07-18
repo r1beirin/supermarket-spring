@@ -1,9 +1,6 @@
 package com.springstudie.supermarket.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -14,8 +11,11 @@ public class User implements Serializable {
     private static final long serialVersionUID = 42L;
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(nullable = false)
     private String name;
+    @Column(unique=true, nullable = false)
     private String email;
+    @Column(nullable = false, length = 1000)
     private String password;
 
     public long getId() {
