@@ -15,11 +15,12 @@ async function enviaForm(form){
         };
 
         let response = await fetch(form.getAttribute("action"), obj);
-        if(!response.ok) throw new Error(response.text);
+        if(!response.ok) throw new Error(response.statusText);
+
         const responseJS = await response.json();
 
-        console.log(responseJS);
-
+        if(responseJS.valid) console.log("ok");
+        else alert("Verifique os campos");
     } catch (e) {
         console.error(e);
     }

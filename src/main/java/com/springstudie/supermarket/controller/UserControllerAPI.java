@@ -1,16 +1,14 @@
 package com.springstudie.supermarket.controller;
 
 import com.springstudie.supermarket.model.usecases.User;
-import com.springstudie.supermarket.repository.ProductRepository;
 import com.springstudie.supermarket.repository.UserRepository;
 import com.springstudie.supermarket.services.UserServices;
 import org.json.simple.JSONObject;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @RequestMapping( "/api/user")
 public class UserControllerAPI {
 
@@ -20,20 +18,16 @@ public class UserControllerAPI {
         this.userRepository = userRepository;
     }
 
-    @PostMapping( value = "/", consumes = "application/json")
-    public JSONObject registerUser(@RequestBody JSONObject userFromJson){
-        JSONObject obj = new JSONObject();
-
-        if(UserServices.isValidField(userFromJson)){
-            User user = new User();
-            UserServices.setProductField(user, userFromJson);
+    @PostMapping(value = "/")
+    public JSONObject registerUser(User user){
+        JSONObject jsonObject = new JSONObject();
+        if(UserServices.isValidField(user)){
             userRepository.save(user);
-
-            obj.put("valid", true);
-            return obj;
+            jsonObject.put("valid", true);
+            return jsonObject;
         }
 
-        obj.put("valid", false);
-        return obj;
+        jsonObject.put("valid", false);
+        return jsonObject;
     }
 }
