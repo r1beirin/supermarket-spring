@@ -47,6 +47,29 @@ public class UserServices {
     }
 
     /**
+     * This method encrypt a password with SHA-256 and encode to hexadecimal.
+     * @param password String
+     * @return String
+     */
+    public static String encryptPassword(String password){
+        StringBuilder hexStringPass = new StringBuilder();
+
+        try {
+            MessageDigest algorithm = MessageDigest.getInstance("SHA-256");
+            byte[] messageDigest = algorithm.digest(password.getBytes(StandardCharsets.UTF_8));
+
+            for (byte b : messageDigest) {
+                hexStringPass.append(String.format("%02X", 0xFF & b));
+            }
+            return hexStringPass.toString();
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return password;
+    }
+
+    /**
      * This method is used to compare two passwords. One is input from user, second is output of existing user.
      * @param userFromLogin User object
      * @param userFromQuery User object
