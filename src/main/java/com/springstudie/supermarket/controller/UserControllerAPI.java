@@ -18,12 +18,26 @@ public class UserControllerAPI {
         this.userRepository = userRepository;
     }
 
-    @PostMapping(value = "/")
+    @PostMapping(value = "/create/")
     public JSONObject registerUser(User user){
         JSONObject jsonObject = new JSONObject();
         if(UserServices.isValidField(user)){
             UserServices.encryptPassword(user);
             userRepository.save(user);
+            jsonObject.put("valid", true);
+            return jsonObject;
+        }
+
+        jsonObject.put("valid", false);
+        return jsonObject;
+    }
+
+    @PostMapping(value = "/login/")
+    public JSONObject loginUser(String email, String password){
+        JSONObject jsonObject = new JSONObject();
+        User user = userRepository.findByEmail(email);
+
+        if(UserServices.comparePassword(password, user)){
             jsonObject.put("valid", true);
             return jsonObject;
         }
