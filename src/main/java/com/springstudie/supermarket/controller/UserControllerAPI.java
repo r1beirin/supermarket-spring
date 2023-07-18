@@ -1,14 +1,12 @@
 package com.springstudie.supermarket.controller;
 
-import com.springstudie.supermarket.model.usecases.User;
+import com.springstudie.supermarket.model.User;
 import com.springstudie.supermarket.repository.UserRepository;
 import com.springstudie.supermarket.services.UserServices;
 import org.json.simple.JSONObject;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.security.NoSuchAlgorithmException;
 
 @RestController
 @RequestMapping( "/api/user")

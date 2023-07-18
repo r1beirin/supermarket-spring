@@ -1,4 +1,4 @@
-package com.springstudie.supermarket.model.usecases;
+package com.springstudie.supermarket.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

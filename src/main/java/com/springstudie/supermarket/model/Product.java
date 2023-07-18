@@ -1,4 +1,4 @@
-package com.springstudie.supermarket.model.usecases;
+package com.springstudie.supermarket.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;

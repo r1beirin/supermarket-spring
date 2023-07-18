@@ -1,6 +1,6 @@
 package com.springstudie.supermarket.services;
 
-import com.springstudie.supermarket.model.usecases.User;
+import com.springstudie.supermarket.model.User;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 
