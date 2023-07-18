@@ -52,9 +52,9 @@ public class UserServices {
      * @param userFromQuery User object
      * @return boolean
      */
-    public static boolean comparePassword(User userFromLogin, User userFromQuery){
-        encryptPassword(userFromLogin);
+    public static boolean comparePassword(String password, User userFromQuery){
+        password = encryptPassword(password);
 
-        return userFromLogin.getPassword().equals(userFromQuery.getPassword());
+        return userFromQuery.getPassword().equals(password);
     }
 }
