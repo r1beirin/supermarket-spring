@@ -6,13 +6,12 @@ import java.security.MessageDigest;
 
 public class UserServices {
 
-    /*
+    /**
      * This method validate a field in request.
      * Regex: [a-zA-Z\\s]+ -> to validate just word.
      * Regex: ^ *$ -> to validate wordspaces.
-     *
-     * @Author: github.com/r1beirin
-     * @Year: 2023
+     * @param user
+     * @return
      */
     public static boolean isValidField(User user){
         return  user.getName() != null &&
@@ -24,7 +23,10 @@ public class UserServices {
                 user.getPassword() != null;
     }
 
-    //  https://www.devmedia.com.br/como-funciona-a-criptografia-hash-em-java/31139
+    /**
+     * This method encrypt a password with SHA-256 and encode to hexadecimal.
+     * @param user
+     */
     public static void encryptPassword(User user){
         String password = user.getPassword();
         StringBuilder hexStringPass = new StringBuilder();
@@ -42,5 +44,17 @@ public class UserServices {
         catch (Exception e){
             System.out.println(e.getMessage());
         }
+    }
+
+    /**
+     * This method is used to compare two passwords. One is input from user, second is output of existing user.
+     * @param userFromLogin
+     * @param userFromQuery
+     * @return
+     */
+    public static boolean comparePassword(User userFromLogin, User userFromQuery){
+        encryptPassword(userFromLogin);
+
+        return userFromLogin.getPassword().equals(userFromQuery.getPassword());
     }
 }
