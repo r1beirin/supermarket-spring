@@ -12,6 +12,5 @@ public interface UserServices {
     boolean comparePassword(String password, User userFromQuery);
     void register(User user, JSONObject jsonObject);
     boolean existByEmail(String email);
-
     void login(String email, String password, JSONObject jsonObject);
 }

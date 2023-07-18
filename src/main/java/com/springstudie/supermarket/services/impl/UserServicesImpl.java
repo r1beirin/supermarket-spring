@@ -104,7 +104,7 @@ public class UserServicesImpl implements UserServices {
     @Override
     public void login(String email, String password, JSONObject jsonObject) {
         Optional<User> user = userRepository.findByEmail(email);
-        if(existByEmail(email) && comparePassword(password, user.get())){
+        if(this.existByEmail(email) && this.comparePassword(password, user.get())){
             jsonObject.put("valid", true);
         }
         else{
