@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface UserServices {
     boolean isValidField(User user);
-    void register(User user, JSONObject jsonObject);
+    void register(User user);
     boolean existByEmail(String email);
     void login(String email, String password, JSONObject jsonObject);
 }

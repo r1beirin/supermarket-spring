@@ -33,19 +33,17 @@ public class UserServicesImpl implements UserServices {
     }
 
     @Override
-    public void register(User user, JSONObject jsonObject) {
+    public void register(User user) {
         if(this.isValidField(user)){
             if(this.existByEmail(user.getEmail()))
-                jsonObject.put("valid", false);
-
+                System.out.println("User another email");
             else{
                 PasswordUtil.encrypt(user.getPassword());
                 userRepository.save(user);
-                jsonObject.put("valid", true);
             }
         }
         else
-            jsonObject.put("valid", false);
+            System.out.println("Error in field");
     }
 
     @Override
