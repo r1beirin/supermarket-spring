@@ -9,5 +9,4 @@ public interface UserServices {
     boolean isValidField(User user);
     void register(User user);
     boolean existByEmail(String email);
-    void login(String email, String password, JSONObject jsonObject);
 }

@@ -50,15 +50,4 @@ public class UserServicesImpl implements UserServices{
     public boolean existByEmail(String email) {
         return userRepository.findByEmail(email).isPresent();
     }
-
-    @Override
-    public void login(String email, String password, JSONObject jsonObject) {
-        Optional<User> user = userRepository.findByEmail(email);
-        if(this.existByEmail(email) && PasswordUtil.compare(password, user.get().getPassword())){
-            jsonObject.put("valid", true);
-        }
-        else{
-            jsonObject.put("valid", false);
-        }
-    }
 }
