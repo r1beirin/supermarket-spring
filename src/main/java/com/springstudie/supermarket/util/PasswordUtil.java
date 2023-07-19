@@ -1,10 +1,11 @@
 package com.springstudie.supermarket.util;
 
+import com.springstudie.supermarket.entity.User;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 public class PasswordUtil {
-    public static String encrypt(String password){
-        return BCrypt.hashpw(password, BCrypt.gensalt());
+    public static void encrypt(User user){
+        user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
     }
 
     public static boolean compare(String password, String hash){
