@@ -38,7 +38,7 @@ public class UserServicesImpl implements UserServices {
             if(this.existByEmail(user.getEmail()))
                 System.out.println("User another email");
             else{
-                PasswordUtil.encrypt(user.getPassword());
+                PasswordUtil.encrypt(user);
                 userRepository.save(user);
             }
         }
