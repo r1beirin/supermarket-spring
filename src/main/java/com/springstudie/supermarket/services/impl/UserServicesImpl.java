@@ -3,6 +3,7 @@ package com.springstudie.supermarket.services.impl;
 import com.springstudie.supermarket.entity.User;
 import com.springstudie.supermarket.repository.UserRepository;
 import com.springstudie.supermarket.services.UserServices;
+import com.springstudie.supermarket.util.PasswordUtil;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
@@ -38,7 +39,7 @@ public class UserServicesImpl implements UserServices {
                 jsonObject.put("valid", false);
 
             else{
-                this.encryptPassword(user);
+                PasswordUtil.encrypt(user.getPassword());
                 userRepository.save(user);
                 jsonObject.put("valid", true);
             }
@@ -55,7 +56,7 @@ public class UserServicesImpl implements UserServices {
     @Override
     public void login(String email, String password, JSONObject jsonObject) {
         Optional<User> user = userRepository.findByEmail(email);
-        if(this.existByEmail(email) && this.comparePassword(password, user.get())){
+        if(this.existByEmail(email) && PasswordUtil.compare(password, user.get().getPassword())){
             jsonObject.put("valid", true);
         }
         else{
