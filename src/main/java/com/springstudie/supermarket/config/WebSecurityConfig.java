@@ -20,8 +20,17 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests()
+                .requestMatchers("/js/**").permitAll()
+                .requestMatchers("/css/**").permitAll()
+                .requestMatchers("/img/**").permitAll()
+                .requestMatchers("/").permitAll()
                 .requestMatchers("/user/register").permitAll()
-                .anyRequest().denyAll();
+                .anyRequest().authenticated();
+
+        http.formLogin()
+                .loginPage("/user/login")
+                .defaultSuccessUrl("/user/home")
+                .permitAll();
 
         return http.build();
     }
