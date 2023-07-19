@@ -5,9 +5,6 @@ import com.springstudie.supermarket.repository.UserRepository;
 import com.springstudie.supermarket.services.UserServices;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
-
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
 import java.util.Optional;
 
 @Service
@@ -32,52 +29,6 @@ public class UserServicesImpl implements UserServices {
                 user.getEmail().matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$") &&
                 !user.getEmail().matches("^ *$") &&
                 user.getPassword() != null;
-    }
-
-    @Override
-    public void encryptPassword(User user){
-        String password = user.getPassword();
-        StringBuilder hexStringPass = new StringBuilder();
-
-        try {
-            MessageDigest algorithm = MessageDigest.getInstance("SHA-256");
-            byte[] messageDigest = algorithm.digest(password.getBytes(StandardCharsets.UTF_8));
-
-            for (byte b : messageDigest) {
-                hexStringPass.append(String.format("%02X", 0xFF & b));
-            }
-            String hexPass = hexStringPass.toString();
-            user.setPassword(hexPass);
-        }
-        catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-    }
-
-    @Override
-    public String encryptPassword(String password){
-        StringBuilder hexStringPass = new StringBuilder();
-
-        try {
-            MessageDigest algorithm = MessageDigest.getInstance("SHA-256");
-            byte[] messageDigest = algorithm.digest(password.getBytes(StandardCharsets.UTF_8));
-
-            for (byte b : messageDigest) {
-                hexStringPass.append(String.format("%02X", 0xFF & b));
-            }
-            return hexStringPass.toString();
-        }
-        catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-        return password;
-    }
-
-    @Override
-    public boolean comparePassword(String password, User userFromQuery){
-        password = encryptPassword(password);
-
-        return userFromQuery.getPassword().equals(password);
     }
 
     @Override
