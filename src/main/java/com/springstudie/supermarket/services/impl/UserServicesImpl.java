@@ -5,14 +5,11 @@ import com.springstudie.supermarket.repository.UserRepository;
 import com.springstudie.supermarket.services.UserServices;
 import com.springstudie.supermarket.util.PasswordUtil;
 import org.json.simple.JSONObject;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class UserServicesImpl implements UserServices, UserDetailsService {
+public class UserServicesImpl implements UserServices{
     private final UserRepository userRepository;
 
     public UserServicesImpl(UserRepository userRepository) {
@@ -63,13 +60,5 @@ public class UserServicesImpl implements UserServices, UserDetailsService {
         else{
             jsonObject.put("valid", false);
         }
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("Email not found"));
-
-        return new UserDetailsImpl(user);
     }
 }
