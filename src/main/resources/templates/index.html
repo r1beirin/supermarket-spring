@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,16 +12,17 @@
       <nav id="menu-horizontal">
         <ul>
             <li><a href="/">Home</a></li>
-            <li><a href="/products">Products</a></li>
-            <li><a href="/products/register">Register a product</a></li>
+            <li th:if="${isLogged}"><a href="/products">Products</a></li>
+            <li th:if="${isLogged}"><a href="/products/register">Register a product</a></li>
         </ul>
       </nav>
     </div>
     <div>
       <nav id="menu-horizontal">
         <ul>
-            <li><a href="/user/login">Login</a></li>
-            <li><a href="/user/register">Register</a></li>
+            <li th:if="${!isLogged}"><a href="/user/login">Login</a></li>
+            <li th:if="${!isLogged}"><a href="/user/register">Register</a></li>
+            <li th:if="${isLogged}"><a href="/user/logout">Logout</a></li>
         </ul>
       </nav>
     </div>
