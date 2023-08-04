@@ -7,10 +7,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-public class WebSecurityConfig {
+public class WebSecurityConfig{
     public final UserDetailsServices userDetailsServices;
 
     public WebSecurityConfig(UserDetailsServices userDetailsServices) {
@@ -27,19 +28,19 @@ public class WebSecurityConfig {
                 .requestMatchers("/user/register").permitAll()
                 .anyRequest().authenticated();
 
-        http.formLogin()
-                .loginPage("/user/login")
-                .defaultSuccessUrl("/user/home")
-                .permitAll();
+        http
+                .formLogin(form -> form
+                        .loginPage("/user/login")
+                        .permitAll()
+                        .defaultSuccessUrl("/")
+                );
 
         return http.build();
     }
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .userDetailsService(userDetailsServices)
-                .passwordEncoder(new BCryptPasswordEncoder());
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
     }
 
 }

@@ -36,6 +36,6 @@ public class UserController {
         return mv;
     }
 
-    @GetMapping("/login")
+    @GetMapping("login")
     public ModelAndView login() { return new ModelAndView("login"); }
 }
