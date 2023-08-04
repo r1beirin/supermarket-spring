@@ -1,46 +1,74 @@
 package com.springstudie.supermarket.controller;
 
 import com.springstudie.supermarket.entity.Product;
+import com.springstudie.supermarket.services.ProductServices;
+import com.springstudie.supermarket.services.UserServices;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 @Controller
+@RequestMapping("product")
 public class ProductController {
 
-    private final ProductsAPIController productAPI;
+    private final ProductServices productServices;
 
-    public ProductController(ProductsAPIController productAPI) {
-        this.productAPI = productAPI;
+    public ProductController(ProductServices productServices) {
+        this.productServices = productServices;
     }
-    @GetMapping("/products")
+    @GetMapping("")
     public ModelAndView products(){
         ModelAndView mv = new ModelAndView("products");
-        List<Product> productList = productAPI.getAllProducts();
+        List<Product> productList = productServices.getAllProduct();
+
         mv.addObject("productList", productList);
 
         return mv;
     }
 
-    @GetMapping(value = "/products/register")
-    public ModelAndView registerProduct(){
+    @GetMapping(value = "register")
+    public ModelAndView register(){
+        ModelAndView mv = new ModelAndView("productsRegister");
 
-        return new ModelAndView("productsRegister");
-    }
+        mv.addObject("product", new Product());
 
-    @GetMapping("/products/edit/{id}")
-    public ModelAndView editProduct(@PathVariable long id){
-        ModelAndView mv = new ModelAndView("productsEdit");
-        Product product = productAPI.getProduct(id).getBody();
-        mv.addObject("product", product);
         return mv;
     }
 
-    @GetMapping("/products/delete/{id}")
+    @PostMapping(value = "register")
+    public ModelAndView register(@ModelAttribute Product product){
+        ModelAndView mv = new ModelAndView("productsRegister");
+
+        productServices.postProduct(product);
+
+        mv.addObject("product", product);
+
+        return mv;
+    }
+
+    @GetMapping("/edit/{id}")
+    public ModelAndView editProduct(@PathVariable long id){
+        ModelAndView mv = new ModelAndView("productsEdit");
+        Product product = productServices.getProduct(id).getBody();
+
+        mv.addObject("product", product);
+
+        return mv;
+    }
+
+    @PutMapping("/edit/{id}")
+    public ModelAndView editProduct(@ModelAttribute Product product){
+        ModelAndView mv = new ModelAndView("productsEdit");
+
+        productServices.updateProduct(product);
+
+        return mv;
+    }
+
+    @GetMapping("/delete/{id}")
     public String deleteProduct(@PathVariable long id){
-        productAPI.deleteProduct(id).getBody();
-        return "redirect:/products";
+        productServices.deleteProduct(id);
+        return "redirect:/";
     }
 }

@@ -16,6 +16,10 @@ public interface ProductServices {
     void product2json(Product product, JSONObject json);
     boolean isValidField(JSONObject product);
     void setProductField(Product product, JSONObject productToBeConverted);
+    void postProduct(Product product);
+    void updateProduct(Product product);
+    void deleteProduct(Long id);
+    List<Product> getAllProduct();
     ResponseEntity<Product> delete(long id);
     ResponseEntity<Product> getUpdateProductResponseEntity(JSONObject productFromJson, long id);
     List<Product> getAllProducts();

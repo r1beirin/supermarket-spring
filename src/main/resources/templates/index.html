@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Supermarket-spring</title>
   <link rel="stylesheet" href="/css/header.css"> 
 </head>
@@ -12,8 +12,8 @@
       <nav id="menu-horizontal">
         <ul>
             <li><a href="/">Home</a></li>
-            <li th:if="${isLogged}"><a href="/products">Products</a></li>
-            <li th:if="${isLogged}"><a href="/products/register">Register a product</a></li>
+            <li th:if="${isLogged}"><a href="/product">Products</a></li>
+            <li th:if="${isLogged}"><a href="/product/register">Register a product</a></li>
         </ul>
       </nav>
     </div>

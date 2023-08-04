@@ -5,6 +5,8 @@ import com.springstudie.supermarket.repository.UserRepository;
 import com.springstudie.supermarket.services.UserServices;
 import com.springstudie.supermarket.util.PasswordUtil;
 import org.json.simple.JSONObject;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
 
@@ -49,5 +51,12 @@ public class UserServicesImpl implements UserServices{
     @Override
     public boolean existByEmail(String email) {
         return userRepository.findByEmail(email).isPresent();
+    }
+
+    @Override
+    public boolean isAuthenticated() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        return authentication.getPrincipal() instanceof UserDetailsImpl;
     }
 }

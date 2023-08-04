@@ -9,4 +9,5 @@ public interface UserServices {
     boolean isValidField(User user);
     void register(User user);
     boolean existByEmail(String email);
+    boolean isAuthenticated();
 }

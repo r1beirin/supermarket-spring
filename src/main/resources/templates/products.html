@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,8 +13,8 @@
       <nav id="menu-horizontal">
         <ul>
             <li><a href="/">Home</a></li>
-            <li><a href="/products">Products</a></li>
-            <li><a href="/products/register">Register a product</a></li>
+            <li><a href="/product">Products</a></li>
+            <li><a href="/product/register">Register a product</a></li>
         </ul>
       </nav>
     </div>
@@ -49,8 +49,8 @@
             <td th:text="${product.descriptionProduct}"></td>
             <td th:text="${product.expirationProductAt}"></td>
             <td>
-              <a th:href="@{/products/edit/{id}(id=${product.id})}"><i><img src="/img/edit-button.svg" alt="Edit icone"></i></a>
-              <a th:href="@{/products/delete/{id}(id=${product.id})}"><i onclick="alert('Product has been successfully deleted!')"><img src="/img/trash-button.svg" alt="Trash icone"></i></a>
+              <a th:href="@{/product/edit/{id}(id=${product.id})}"><i><img src="/img/edit-button.svg" alt="Edit icone"></i></a>
+              <a th:href="@{/product/delete/{id}(id=${product.id})}"><i onclick="alert('Product has been successfully deleted!')"><img src="/img/trash-button.svg" alt="Trash icone"></i></a>
             </td>
           </tr>
         </tbody>

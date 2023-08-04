@@ -13,8 +13,8 @@
       <nav id="menu-horizontal">
         <ul>
             <li><a href="/">Home</a></li>
-            <li><a href="/products">Products</a></li>
-            <li><a href="/products/register">Register a product</a></li>
+            <li><a href="/product">Products</a></li>
+            <li><a href="/product/register">Register a product</a></li>
         </ul>
       </nav>
     </div>
@@ -31,7 +31,7 @@
     <div class="container">
       <h1>Edit your product</h1>
     
-      <form id="updateProductForm" tabindex="1" th:object="${product}" th:action="@{/api/products/__${product.id}__}" method="post">
+      <form id="updateProductForm" tabindex="1" th:object="${product}" th:action="@{/product/edit/__${product.id}__}" method="post">
         <input type="hidden" name="_method" value="PUT" />
         <div>
           <label>Name</label>
@@ -58,7 +58,7 @@
             <button type="submit" class="form-button">Edit</button>
           </div>
           <div class="button">
-            <a href="/products"><button type="button" class="form-button">Back</button></a>
+            <a href="/product"><button type="button" class="form-button">Back</button></a>
           </div>
         </div>
       </form>
