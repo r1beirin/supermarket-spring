@@ -82,6 +82,26 @@ public class ProductServicesImpl implements ProductServices {
     }
 
     @Override
+    public void postProduct(Product product) {
+        productRepository.save(product);
+    }
+
+    @Override
+    public void updateProduct(Product product) {
+        productRepository.saveAndFlush(product);
+    }
+
+    @Override
+    public void deleteProduct(Long id) {
+        productRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Product> getAllProduct() {
+        return productRepository.findAll();
+    }
+
+    @Override
     public ResponseEntity<Product> delete(long id) {
 
         Product product = productRepository.findById(id);

@@ -3,15 +3,15 @@ package com.springstudie.supermarket.services.impl;
 import com.springstudie.supermarket.entity.User;
 import com.springstudie.supermarket.repository.UserRepository;
 import com.springstudie.supermarket.services.UserServices;
+import com.springstudie.supermarket.util.PasswordUtil;
 import org.json.simple.JSONObject;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
 import java.util.Optional;
 
 @Service
-public class UserServicesImpl implements UserServices {
+public class UserServicesImpl implements UserServices{
     private final UserRepository userRepository;
 
     public UserServicesImpl(UserRepository userRepository) {
@@ -35,65 +35,17 @@ public class UserServicesImpl implements UserServices {
     }
 
     @Override
-    public void encryptPassword(User user){
-        String password = user.getPassword();
-        StringBuilder hexStringPass = new StringBuilder();
-
-        try {
-            MessageDigest algorithm = MessageDigest.getInstance("SHA-256");
-            byte[] messageDigest = algorithm.digest(password.getBytes(StandardCharsets.UTF_8));
-
-            for (byte b : messageDigest) {
-                hexStringPass.append(String.format("%02X", 0xFF & b));
-            }
-            String hexPass = hexStringPass.toString();
-            user.setPassword(hexPass);
-        }
-        catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-    }
-
-    @Override
-    public String encryptPassword(String password){
-        StringBuilder hexStringPass = new StringBuilder();
-
-        try {
-            MessageDigest algorithm = MessageDigest.getInstance("SHA-256");
-            byte[] messageDigest = algorithm.digest(password.getBytes(StandardCharsets.UTF_8));
-
-            for (byte b : messageDigest) {
-                hexStringPass.append(String.format("%02X", 0xFF & b));
-            }
-            return hexStringPass.toString();
-        }
-        catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-        return password;
-    }
-
-    @Override
-    public boolean comparePassword(String password, User userFromQuery){
-        password = encryptPassword(password);
-
-        return userFromQuery.getPassword().equals(password);
-    }
-
-    @Override
-    public void register(User user, JSONObject jsonObject) {
+    public void register(User user) {
         if(this.isValidField(user)){
             if(this.existByEmail(user.getEmail()))
-                jsonObject.put("valid", false);
-
+                System.out.println("User another email");
             else{
-                this.encryptPassword(user);
+                PasswordUtil.encrypt(user);
                 userRepository.save(user);
-                jsonObject.put("valid", true);
             }
         }
         else
-            jsonObject.put("valid", false);
+            System.out.println("Error in field");
     }
 
     @Override
@@ -102,13 +54,9 @@ public class UserServicesImpl implements UserServices {
     }
 
     @Override
-    public void login(String email, String password, JSONObject jsonObject) {
-        Optional<User> user = userRepository.findByEmail(email);
-        if(this.existByEmail(email) && this.comparePassword(password, user.get())){
-            jsonObject.put("valid", true);
-        }
-        else{
-            jsonObject.put("valid", false);
-        }
+    public boolean isAuthenticated() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        return authentication.getPrincipal() instanceof UserDetailsImpl;
     }
 }
