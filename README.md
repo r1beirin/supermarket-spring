@@ -20,7 +20,7 @@ I'll create from root in MySQL a <b>user</b> `supermarket` with a <b>password</b
 
 We need grant all privileges to created user to make changes in our database.
 
-1. <code>GRANT ALL PRIVILEGES ON `supermarket`.* TO `supermarket`@`%`;</code>
+1. <code>GRANT ALL PRIVILEGES ON supermarket.* TO 'supermarket'@'%';</code>
 2. To list all grants from supermarket: `SHOW GRANTS FOR 'supermarket';`
 
 **_Warning_**: the best practice to MySQL accounts it's grants just basic permissions. But for this project, only for the practice project, I grant all privileges to this account.
